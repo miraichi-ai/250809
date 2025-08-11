@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mac版VRoidアバター作成・3tene・Zoom完全攻略ガイド</title>
+    
+    <!-- Mermaid.js の読み込み -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'base',
+                securityLevel: 'loose',
+                fontFamily: '"Kaisei Decol", sans-serif',
+                themeVariables: {
+                    primaryColor: '#4CAF50',
+                    primaryTextColor: '#fff',
+                    primaryBorderColor: '#E91E63',
+                    lineColor: '#009688',
+                    secondaryColor: '#FFC107',
+                    tertiaryColor: '#9575CD'
+                },
+                flowchart: {
+                    cornerRadius: 15,
+                    curve: 'cardinal',
+                    htmlLabels: true
+                }
+            });
+        });
+    </script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', Meiryo, sans-serif;
+            line-height: 1.6;
+            background-color: #FAFAFA;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #4CAF50, #009688);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(76, 175, 80, 0.3);
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .section {
+            background: white;
+            margin: 30px 0;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #4CAF50;
+        }
+        
+        .section h2 {
+            color: #4CAF50;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section h3 {
+            color: #009688;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+            border-bottom: 2px solid #FFC107;
+            padding-bottom: 5px;
+        }
+        
+        .section h4 {
+            color: #9575CD;
+            font-size: 1.2em;
+            margin: 20px 0 10px 0;
+        }
+        
+        .icon {
+            width: 24px;
+            height: 24px;
+            display: inline-block;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .icon-setup { background-color: #9575CD; }
+        .icon-create { background-color: #FFC107; color: #333; }
+        .icon-3tene { background-color: #009688; }
+        .icon-zoom { background-color: #E91E63; }
+        .icon-troubleshoot { background-color: #FF5722; }
+        .icon-summary { background-color: #4CAF50; }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #FFF3E0, #E8F5E8);
+            border: 2px solid #FFC107;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .alert-box {
+            background: linear-gradient(135deg, #FFEBEE, #FCE4EC);
+            border: 2px solid #E91E63;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .success-box {
+            background: linear-gradient(135deg, #E8F5E8, #F1F8E9);
+            border: 2px solid #4CAF50;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .warning-box {
+            background: linear-gradient(135deg, #FFF8E1, #FFFDE7);
+            border: 2px solid #FF9800;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            padding: 0;
+        }
+        
+        .step-list li {
+            counter-increment: step-counter;
+            margin: 15px 0;
+            padding: 15px 20px 15px 60px;
+            background: linear-gradient(135deg, #F8F9FA, #FFFFFF);
+            border-radius: 10px;
+            border-left: 4px solid #4CAF50;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 20px;
+            top: 15px;
+            background: #4CAF50;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .detailed-steps {
+            background: #F5F5F5;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 3px solid #009688;
+        }
+        
+        .detailed-steps ol {
+            margin-left: 20px;
+        }
+        
+        .detailed-steps li {
+            margin: 8px 0;
+            font-size: 0.95em;
+        }
+        
+        .term {
+            background: #E3F2FD;
+            color: #1565C0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .explanation {
+            color: #666;
+            font-size: 0.9em;
+            margin-left: 5px;
+        }
+        
+        .workflow-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .comparison-table th {
+            background: #4CAF50;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .emoji {
+            font-size: 1.2em;
+            margin-right: 5px;
+        }
+        
+        .mac-specific {
+            background: linear-gradient(135deg, #E8EAF6, #F3E5F5);
+            border: 2px solid #9575CD;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .button-guide {
+            background: #E8F5E8;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border-left: 4px solid #4CAF50;
+            margin: 10px 0;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        
+        .footer {
+            background: linear-gradient(135deg, #9575CD, #E91E63);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🍎 Mac版VRoidアバター作成・3tene・Zoom完全攻略ガイド</h1>
+            <p>超初心者でも安心！画面のどこを押すかまで詳細解説</p>
+        </div>
+
+        <div class="section">
+            <h2><span class="icon icon-setup">1</span>事前準備：Macでの必要ソフトダウンロード</h2>
+            
+            <h3>🎯 結論</h3>
+            <div class="success-box">
+                <strong>VRoidスタジオ</strong>、<strong>3tene</strong>、<strong>VCam</strong>の3つのソフトをMacにダウンロードして、バーチャル配信の準備を完了させます！
+            </div>
+            
+            <h3>📚 背景・Mac環境の特殊事情</h3>
+            <div class="mac-specific">
+                <h4>🍎 Macでの重要な制約</h4>
+                <p><span class="term">M1・M2 Mac</span><span class="explanation">（Apple独自のチップを搭載したMac）</span>では、<span class="term">3tene</span>の<span class="term">音声リップシンク</span><span class="explanation">（口の動きに合わせて音声を同期する機能）</span>が使用できません。また、<span class="term">セキュリティ設定</span><span class="explanation">（Macが不明なアプリの実行を制限する機能）</span>により、Windows版より設定が複雑になります。</p>
+            </div>
+            
+            <h3>🛠️ 具体的なダウンロード手順</h3>
+            
+            <h4>📱 ステップ1：VRoidスタジオのダウンロード</h4>
+            <div class="detailed-steps">
+                <ol>
+                    <li><strong>Safariブラウザを開く</strong><br>
+                        <div class="button-guide">Dock（画面下の黒いバー）→ コンパスのようなアイコンをクリック</div>
+                    </li>
+                    <li><strong>検索と公式サイトアクセス</strong><br>
+                        <div class="button-guide">検索バー→「VRoid Studio」と入力→Enterキー</div>
+                    </li>
+                    <li><strong>公式サイトからダウンロード</strong><br>
+                        <div class="button-guide">vroid.com をクリック→「ダウンロード」ボタン→「Mac版」選択</div>
+                    </li>
+                    <li><strong>インストール実行</strong><br>
+                        <div class="button-guide">ダウンロードフォルダ→VRoidStudio.dmgをダブルクリック→Applicationsフォルダにドラッグ</div>
+                    </li>
+                </ol>
+            </div>
+            
+            <h4>🎭 ステップ2：3teneのダウンロード</h4>
+            <div class="detailed-steps">
+                <ol>
+                    <li><strong>3tene公式サイトアクセス</strong><br>
+                        <div class="button-guide">Safari→「3tene」検索→3tene.com クリック</div>
+                    </li>
+                    <li><strong>Mac版ダウンロード</strong><br>
+                        <div class="button-guide">「Download」ボタン→「Mac版」選択→dmgファイル保存</div>
+                    </li>
+                    <li><strong>セキュリティ対応インストール</strong><br>
+                        <div class="button-guide">Controlキー + 3teneFREEアプリクリック→「開く」選択</div>
+                    </li>
+                </ol>
+            </div>
+            
+            <h4>📹 ステップ3：VCam（推奨）のダウンロード</h4>
+            <div class="detailed-steps">
+                <ol>
+                    <li><strong>VCam検索とダウンロード</strong><br>
+                        <div class="button-guide">Safari→「VCam Mac」検索→GitHubページ→dmgファイルダウンロード</div>
+                    </li>
+                    <li><strong>権限設定</strong><br>
+                        <div class="button-guide">システム環境設定→セキュリティとプライバシー→カメラ・マイク許可</div>
+                    </li>
+                </ol>
+            </div>
+            
+            <div class="workflow-container">
+                <div class="mermaid">
+                    flowchart TD
+                        A[🌐 Safari起動] --> B[📱 VRoidスタジオDL]
+                        B --> C[🎭 3teneDL]
+                        C --> D[📹 VCamDL]
+                        D --> E[🔐 セキュリティ設定]
+                        E --> F[✅ 準備完了]
+                        
+                        style A fill:#9575CD,stroke:#fff,color:#fff
+                        style F fill:#4CAF50,stroke:#fff,color:#fff
+                </div>
+            </div>
+            
+            <h3>🎨 例え話</h3>
+            <div class="highlight-box">
+                <p><strong>楽器演奏の準備</strong>に例えると、VRoidスタジオは「楽器本体」、3teneは「演奏台」、VCamは「マイク」のような役割です。全て揃えてから演奏（配信）を始めるのが効率的です。</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2><span class="icon icon-create">2</span>VRoidスタジオ：アバター作成の詳細手順</h2>
+            
+            <h3>🎯 結論</h3>
+            <div class="success-box">
+                <strong>VRoidスタジオ</strong>で、顔・髪型・体型・衣装を順番にカスタマイズして、<strong>VRMファイル</strong>として書き出すことで、オリジナル3Dアバターが完成します！
+            </div>
+            
+            <h3>📚 背景・3Dアバターの仕組み</h3>
+            <p><span class="term">3Dアバター</span><span class="explanation">（立体的なキャラクター模型）</span>は、<span class="term">ポリゴン</span><span class="explanation">（小さな三角形を組み合わせた3D形状）</span>と<span class="term">テクスチャ</span><span class="explanation">（表面に貼り付ける画像）</span>で構成されています。VRoidスタジオは、この複雑な技術を<span class="term">GUI</span><span class="explanation">（マウスで直感的に操作できる画面）</span>で簡単に扱えるようにしたツールです。</p>
+            
+            <h3>🛠️ 具体的な作成手順</h3>
+            
+            <h4>🚀 起動とプロジェクト作成</h4>
+            <div class="detailed-steps">
+                <ol>
+                    <li><strong>VRoidスタジオの起動</strong><br>
+                        <div class="button-guide">Launchpad（Dock内の9つの点アイコン）→VRoidスタジオクリック</div>
+                    </li>
+                    <li><strong>言語設定</strong><br>
+                        <div class="button-guide">初回起動時→言語選択「日本語」→「OK」クリック</div>
+                    </li>
+                    <li><strong>新規プロジェクト作成</strong><br>
+                        <div class="button-guide">ホーム画面→「新規作成」ボタン→性別選択→キャラクター名入力（英数字のみ）</div>
+                    </li>
+                </ol>
+            </div>
+            
+            <h4>🎭 基本操作の習得</h4>
+            <div class="mac-specific">
+                <h4>🖱️ Mac用マウス・トラックパッド操作</h4>
+                <ul>
+                    <li><strong>ズーム</strong>：2本指でトラックパッドを上下スライド</li>
+                    <li><strong>回転</strong>：2本指でトラックパッドを押しながら移動</li>
+                    <li><strong>位置調整</strong>：Shiftキー + トラックパッド移動</li>
+                    <li><strong>リセット</strong>：スペースキーで元の位置に戻る</li>
+                </ul>
+            </div>
+            
+            <h4>👤 顔編集の詳細手順</h4>
+            <div class="detailed-steps">
+                <ol>
+                    <li><strong>顔タブを開く</strong><br>
+                        <div class="button-guide">画面左側のメニュー→「顔」タブをクリック</div>
+                    </li>
+                    <li><strong>目の調整</strong><br>
+                        <div class="button-guide">「デザイン」サブタブ→「目」セクション→各スライダーで形状調整</div>
+                    </li>
+                    <li><strong>瞳の色変更</strong><br>
+                        <div class="button-guide">「テクスチャ」サブタブ→「瞳」セクション→カラーパレットで色選択</div>
+                    </li>
+                    <li><strong>鼻・口の調整</strong><br>
+                        <div class="button-guide">「デザイン」タブ→「鼻」「口」セクションでサイズ・位置調整</div>
+                    </li>
+                </ol>
+            </div>
+            
+            <h4>💇 髪型編集の詳細手順</h4>
+            <div class="detailed-steps">
+                <ol>
+                    <li><strong>髪型タブを開く</strong><br>
+                        <div class="button-guide">左メニュー→「髪型」タブクリック</div>
+                    </li>
+                    <li><strong>プリセット髪型選択</strong><br>
+                        <div class="button-guide">「髪セット」から好みのスタイル選択</div>
+                    </li>
+                    <li><strong>髪色のカスタマイズ</strong><br>
+                        <div class="button-guide">右側のカラーパレット→基本色選択→「詳細設定」でグラデーション追加</div>
+                    </li>
+                    <li><strong>髪の長さ調整</strong><br>
+                        <div class="button-guide">「編集」タブ→各髪パーツの長さスライダー調整</div>
+                    </li>
+                </ol>
+            </div>
+            
+            <h4>👕 衣装編集の詳細手順</h4>
+            <div class="detailed-steps">
+                <ol>
+                    <li><strong>衣装タブを開く</strong><br>
+                        <div class="button-guide">左メニュー→「衣装」タブクリック</div>
+                    </li>
+                    <li><strong>衣装セット選択</strong><br>
+                        <div class="button-guide">「衣装セット」→好みの服装スタイル選択</div>
+                    </li>
+                    <li><strong>色とパターン変更</strong><br>
+                        <div class="button-guide">各衣装パーツ→「テクスチャ」→色・模様のカスタマイズ</div>
+                    </li>
+                    <li><strong>アクセサリー追加</strong><br>
+                        <div class="button-guide">「アクセサリー」タブ→メガネ・帽子等を追加</div>
+                    </li>
+                </ol>
+            </div>
+            
+            <h4>💾 VRMエクスポートの詳細手順</h4>
+            <div class="detailed-steps">
+                <ol>
+                    <li><strong>エクスポート開始</strong><br>
+                        <div class="button-guide">画面右上カメラアイコン隣→「エクスポート」ボタンクリック</div>
+                    </li>
+                    <li><strong>VRM形式選択</strong><br>
+                        <div class="button-guide">「VRMエクスポート」選択</div>
+                    </li>
+                    <li><strong>ファイル名と保存場所設定</strong><br>
+                        <div class="button-guide">ファイル名入力（覚えやすい英数字）→保存場所「デスクトップ」選択</div>
+                    </li>
+                    <li><strong>エクスポート実行</strong><br>
+                        <div class="button-guide">「エクスポート」ボタンクリック→処理完了まで待機（2-5分程度）</div>
+                    </li>
+                </ol>
+            </div>
+            
+            <div class="workflow-container">
+                <div class="mermaid">
+                    flowchart TD
+                        A[🚀 VRoidスタジオ起動] --> B[👤 顔カスタマイズ]
+                        B --> C[💇 髪型設定]
+                        C --> D[👕 衣装選択]
+                        D --> E[🎨 色・テクスチャ調整]
+                        E --> F[💾 VRMエクスポート]
+                        F --> G[✅ アバター完成]
+                        
+                        style A fill:#9575CD,stroke:#fff,color:#fff
+                        style G fill:#4CAF50,stroke:#fff,color:#fff
+                </div>
+            </div>
+            
+            <h3>🎨 例え話</h3>
+            <div class="highlight-box">
+                <p><strong>お人形の着せ替え</strong>に例えると、VRoidスタジオは「無限の衣装部屋」です。まず顔立ちを決めて、髪型を選んで、お気に入りの服を着せて、最後に「写真撮影」（エクスポート）して完成です。</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2><span class="icon icon-3tene">3</span>3tene：アバターに命を吹き込む詳細設定</h2>
+            
+            <h3>🎯 結論</h3>
+            <div class="success-box">
+                <strong>3tene</strong>にVRMファイルを読み込んで、<strong>フェイストラッキング</strong>と<strong>リップシンク</strong>を有効にすることで、リアルタイムでアバターが動き出します！
+            </div>
+            
+            <h3>📚 背景・3teneの技術的仕組み</h3>
+            <p><span class="term">3tene</span><span class="explanation">（スリー・テン・イー：3D Live Animationの略）</span>は、<span class="term">Webカメラ</span>の映像から<span class="term">AI機械学習</span><span class="explanation">（人工知能による顔認識）</span>で顔の<span class="term">ランドマーク</span><span class="explanation">（目・鼻・口の重要な点）</span>を検出し、3Dアバターの<span class="term">ボーン</span><span class="explanation">（骨格構造）</span>に動きを伝える高度なソフトウェアです。</p>
+            
+            <div class="alert-box">
+                <h4>⚠️ Mac版の重要な制約</h4>
+                <ul>
+                    <li><strong>M1・M2 Mac</strong>：音声リップシンク機能が使用不可</li>
+                    <li><strong>起動問題</strong>：M2 Macで起動しない既知の不具合あり</li>
+                    <li><strong>セキュリティ</strong>：macOSの保護機能による起動制限</li>
+                </ul>
+            </div>
+            
+            <h3>🛠️ 3teneの詳細起動手順</h3>
+            
+            <h4>🚀 正しい起動方法（Mac版）</h4>
+            <div class="detailed-steps">
+                <ol>
+                    <li><strong>Finderでアプリ確認</strong><br>
+                        <div class="button-guide">Finder（青いフォルダアイコン）→「ダウンロード」フォルダ→3teneFREEフォルダを探す</div>
+                    </li>
+                    <li><strong>セキュリティ対応起動</strong><br>
+                        <div class="button-guide">Controlキー押しながら3teneFREEアプリクリック→メニューから「開く」選択</div>
+                    </li>
+                    <li><strong>警告への対処</strong><br>
+                        <div class="button-guide">「開発元が未確認」警告表示→「開く」ボタンクリック</div>
+                    </li>
+                </ol>
+            </div>
+            
+            <h4>🆘 起動しない場合の特殊対処法</h4>
+            <div class="alert-box">
+                <h4>緊急起動モード</h4>
+                <div class="detailed-steps">
+                    <ol>
+                        <li><strong>Altキー起動</strong><br>
+                            <div class="button-guide">Altキー押しながら3tene起動→動画機能無効化で起動</div>
+                        </li>
+                        <li><strong>動画無効ファイル作成</strong><br>
+                            <div class="button-guide">テキストエディット→新規文書→「動画無効.txt」で保存→3teneフォルダに配置</div>
+                        </li>
+                        <li><strong>完全再インストール</strong><br>
+                            <div class="button-guide">アプリ削除→ゴミ箱を空に→Mac再起動→公式サイトから再ダウンロード</div>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            
+            <h4>📁 VRMファイル読み込みの詳細手順</h4>
+            <div class="detailed-steps">
+                <ol>
+                    <li><strong>3tene起動確認</strong><br>
+                        <div class="button-guide">3teneが正常に起動→メイン画面表示を確認</div>
+                    </li>
+                    <li><strong>ファイル読み込み開始</strong><br>
+                        <div class="button-guide">「PC上のファイルをロード」ボタンクリック</div>
+                    </li>
+                    <li><strong>VRMファイル選択</strong><br>
+                        <div class="button-guide">ファイル選択ダイアログ→デスクトップ→VRoidで作成した.vrmファイル選択</div>
+                    </li>
+                    <li><strong>読み込み完了確認</strong><br>
+                        <div class="button-guide">アバターが3tene画面に表示されることを確認</div>
+                    </li>
+                </ol>
+            </div>
+            
+            <h4>👁️ フェイストラッキング設定の詳細</h4>
+            <div class="detailed-steps">
+                <ol>
+                    <li><strong>カメラ権限確認</strong><br>
+                        <div class="button-guide">システム環境設定→セキュリティとプライバシー→プライバシータブ→カメラ→3teneにチェック</div>
+                    </li>
+                    <li><strong>フェイストラッキング有効化</strong><br>
+                        <div class="button-guide">3tene右側メニュー→「フェイストラッキング」ボタンをON</div>
+                    </li>
+                    <li><strong>カメラ設定調整</strong><br>
+                        <div class="button-guide">「アバター調整」→「設定」→「ウェブカメラ」を「FaceTime」に設定</div>
+                    </li>
+                    <li><strong>動作確認</strong><br>
+                        <div class="button-guide">自分の顔を動かしてアバターが連動することを確認</div>
+                    </li>
+                </ol>
+            </div>
+            
+            <h4>🎤 リップシンク設定（Windows版のみ）</h4>
+            <div class="warning-box">
+                <p><strong>注意</strong>：Mac版（特にM1・M2）では音声リップシンクが使用できません。代替として、<span class="term">VSeeFace</span>や<span class="term">VTube Studio</span>の使用を検討してください。</p>
+            </div>
+            
+            <div class="workflow-container">
+                <div class="mermaid">
+                    flowchart TD
+                        A[🎭 3tene起動] --> B{起動成功？}
+                        B -->|No| C[🆘 緊急起動モード]
+                        B -->|Yes| D[📁 VRMファイル読み込み]
+                        C --> D
+                        D --> E[🔐 権限設定確認]
+                        E --> F[👁️ フェイストラッキングON]
+                        F --> G[🎤 リップシンク設定]
+                        G --> H[✅ 動作確認完了]
+                        
+                        style A fill:#009688,stroke:#fff,color:#fff
+                        style C fill:#FF5722,stroke:#fff,color:#fff
+                        style H fill:#4CAF50,stroke:#fff,color:#fff
+                </div>
+            </div>
+            
+            <h3>🎨 例え話</h3>
+            <div class="highlight-box">
+                <p><strong>人形劇の操演</strong>に例えると、3teneは「見えない糸」の役割です。あなたの表情や動きが、まるで糸で操られるように3Dアバターに瞬時に伝わり、生きているかのような動きを実現します。</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2><span class="icon icon-zoom">4</span>Zoom連携：バーチャル会議デビューの完全設定</h2>
+            
+            <h3>🎯 結論</h3>
+            <div class="success-box">
+                <strong>VCam</strong>または<strong>OBS仮想カメラ</strong>を使って3teneの映像をZoomに送信することで、アバターでのオンライン会議が実現できます！
+            </div>
+            
+            <h3>📚 背景・仮想カメラの仕組み</h3>
+            <p>通常のWebカメラは<span class="term">ハードウェア</span><span class="explanation">（物理的な機器）</span>ですが、<span class="term">仮想カメラ</span><span class="explanation">（ソフトウェアで作られた疑似的なカメラ）</span>はアプリケーションの映像を他のソフトに<span class="term">ストリーミング</span><span class="explanation">（リアルタイム配信）</span>する技術です。これにより、3teneのアバター映像をZoomが「本物のカメラ」として認識できます。</p>
+            
+            <h3>🛠️ 方法1：VCamを使用した設定（推奨）</h3>
+            
+            <h4>📹 VCamの詳細設定手順</h4>
+            <div class="detailed-steps">
+                <ol>
+                    <li><strong>VCamアプリ起動</strong><br>
+                        <div class="button-guide">Launchpad→VCamアイコンクリック</div>
+                    </li>
+                    <li><strong>VRMファイル読み込み</strong><br>
+                        <div class="button-guide">「ファイル」メニュー→「VRoid Hubからファイルを読み込む」→デスクトップのVRMファイル選択</div>
+                    </li>
+                    <li><strong>表示確認</strong><br>
+                        <div class="button-guide">VCam画面にアバターが表示されることを確認</div>
+                    </li>
+                    <li><strong>最適化設定</strong><br>
+                        <div class="button-guide">「トラッキング精度の設定」→「モデルのメッシュを最適化する」にチェック</div>
+                    </li>
+                    <li><strong>背景設定（オプション）</strong><br>
+                        <div class="button-guide">「背景」タブ→好みの背景画像を選択または透明背景設定</div>
+                    </li>
+                </ol>
+            </div>
+            
+            <h4>💻 Zoomでの仮想カメラ設定</h4>
+            <div class="detailed-steps">
+                <ol>
+                    <li><strong>Zoomアプリ起動</strong><br>
+                        <div class="button-guide">LaunchpadまたはDock→Zoomアイコンクリック</div>
+                    </li>
+                    <li><strong>設定画面を開く</strong><br>
+                        <div class="button-guide">Zoom画面右上→「設定」（歯車アイコン）クリック</div>
+                    </li>
+                    <li><strong>ビデオ設定に移動</strong><br>
+                        <div class="button-guide">左側メニュー→「ビデオ」タブクリック</div>
+                    </li>
+                    <li><strong>カメラ変更</strong><br>
+                        <div class="button-guide">「カメラ」ドロップダウンメニュー→「VCam」選択</div>
+                    </li>
+                    <li><strong>プレビュー確認</strong><br>
+                        <div class="button-guide">設定画面のプレビューエリアでアバターが表示されることを確認</div>
+                    </li>
+                </ol>
+            </div>
+            
+            <h3>🛠️ 方法2：OBS仮想カメラを使用した設定</h3>
+            
+            <h4>🎥 OBSでの詳細設定手順</h4>
+            <div class="detailed-steps">
+                <ol>
+                    <li><strong>OBSのダウンロードとインストール</strong><br>
+                        <div class="button-guide">obsproject.com→Mac版ダウンロード→インストール実行</div>
+                    </li>
+                    <li><strong>ソース追加</strong><br>
+                        <div class="button-guide">OBS起動→「ソース」エリア→「+」ボタン→「ウィンドウキャプチャ」選択</div>
+                    </li>
+                    <li><strong>3teneウィンドウ選択</strong><br>
+                        <div class="button-guide">「ウィンドウ」ドロップダウン→「3tene」のウィンドウ選択→「OK」</div>
+                    </li>
+                    <li><strong>仮想カメラ開始</strong><br>
+                        <div class="button-guide">OBS画面右下→「仮想カメラ開始」ボタンクリック</div>
+                    </li>
+                    <li><strong>Zoomでカメラ選択</strong><br>
+                        <div class="button-guide">Zoom設定→ビデオ→カメラ「OBS Virtual Camera」選択</div>
+                    </li>
+                </ol>
+            </div>
+            
+            <h3>🛠️ 方法3：CamTwistを使用した設定（代替手段）</h3>
+            
+            <div class="detailed-steps">
+                <ol>
+                    <li><strong>CamTwistダウンロード</strong><br>
+                        <div class="button-guide">CamTwist公式サイト→Mac版ダウンロード→インストール</div>
+                    </li>
+                    <li><strong>デスクトップキャプチャ設定</strong><br>
+                        <div class="button-guide">CamTwist起動→「Sources」→「Desktop+」選択→3teneウィンドウ指定</div>
+                    </li>
+                    <li><strong>Zoomで認識</strong><br>
+                        <div class="button-guide">Zoom設定→カメラ「CamTwist」選択</div>
+                    </li>
+                </ol>
+            </div>
+            
+            <div class="workflow-container">
+                <div class="mermaid">
+                    flowchart TD
+                        A[🎭 3teneでアバター準備] --> B{仮想カメラ選択}
+                        B -->|推奨| C[📹 VCam設定]
+                        B -->|高機能| D[🎥 OBS設定]
+                        B -->|代替| E[📱 CamTwist設定]
+                        C --> F[💻 Zoom設定]
+                        D --> F
+                        E --> F
+                        F --> G[🚀 バーチャル会議開始]
+                        
+                        style A fill:#009688,stroke:#fff,color:#fff
+                        style G fill:#4CAF50,stroke:#fff,color:#fff
+                </div>
+            </div>
+            
+            <h3>🎨 例え話</h3>
+            <div class="highlight-box">
+                <p><strong>テレビ中継</strong>に例えると、3teneは「撮影スタジオ」、仮想カメラは「中継車」、Zoomは「放送局」の役割です。スタジオの映像を中継車で受け取って、放送局に送信する仕組みと同じです。</p>
+            </div>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>🛠️ 方法</th>
+                        <th>💡 難易度</th>
+                        <th>🎯 推奨度</th>
+                        <th>📝 特徴</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>VCam</td>
+                        <td>★☆☆</td>
+                        <td>★★★</td>
+                        <td>簡単設定、軽量、安定性良好</td>
+                    </tr>
+                    <tr>
+                        <td>OBS</td>
+                        <td>★★☆</td>
+                        <td>★★☆</td>
+                        <td>高機能、配信向け、多機能</td>
+                    </tr>
+                    <tr>
+                        <td>CamTwist</td>
+                        <td>★★★</td>
+                        <td>★☆☆</td>
+                        <td>設定複雑、代替手段として</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2><span class="icon icon-troubleshoot">5</span>トラブルシューティング：Mac特有問題の完全解決法</h2>
+            
+            <h3>🎯 結論</h3>
+            <div class="success-box">
+                Mac特有の<strong>起動問題</strong>、<strong>権限問題</strong>、<strong>パフォーマンス問題</strong>は、システム設定の調整と代替手段の活用で確実に解決できます！
+            </div>
+            
+            <h3>📚 背景・Macでの技術的制約</h3>
+            <p>Macの<span class="term">サンドボックス機能</span><span class="explanation">（アプリの動作を制限するセキュリティ機能）</span>や<span class="term">Gatekeeper</span><span class="explanation">（未署名アプリの実行を防ぐ保護機能）</span>により、Windows版と比較して設定が複雑になります。また、<span class="term">M1・M2チップ</span>の<span class="term">ARM64アーキテクチャ</span><span class="explanation">（新しいCPU設計）</span>では、一部のソフトウェアで互換性問題が発生します。</p>
+            
+            <h3>🚨 問題1：3teneが起動しない</h3>
+            
+            <h4>🔍 症状の詳細分類</h4>
+            <div class="alert-box">
+                <ul>
+                    <li><strong>M2 Mac特有問題</strong>：アプリアイコンクリックで無反応</li>
+                    <li><strong>セキュリティブロック</strong>：「開発元が未確認」エラー</li>
+                    <li><strong>初回起動遅延</strong>：「少々お待ちください」から進まない</li>
+                    <li><strong>画面固まり</strong>：起動画面でフリーズ</li>
+                </ul>
+            </div>
+            
+            <h4>💡 段階的解決手順</h4>
+            
+            <h5>レベル1：基本的対処法</h5>
+            <div class="detailed-steps">
+                <ol>
+                    <li><strong>正しい起動方法</strong><br>
+                        <div class="button-guide">Controlキー + アプリクリック→「開く」選択</div>
+                    </li>
+                    <li><strong>システム環境設定確認</strong><br>
+                        <div class="button-guide">Appleメニュー→システム環境設定→セキュリティとプライバシー→「このまま開く」</div>
+                    </li>
+                    <li><strong>待機時間確保</strong><br>
+                        <div class="button-guide">初回起動は5分程度待機（バックグラウンド処理のため）</div>
+                    </li>
+                </ol>
+            </div>
+            
+            <h5>レベル2：緊急起動モード</h5>
+            <div class="detailed-steps">
+                <ol>
+                    <li><strong>Altキー起動</strong><br>
+                        <div class="button-guide">Altキー押しながら3tene起動→動画機能無効化</div>
+                    </li>
+                    <li><strong>動画無効設定ファイル作成</strong><br>
+                        <div class="button-guide">テキストエディット→「動画無効.txt」作成→3teneフォルダに配置</div>
+                    </li>
+                </ol>
+            </div>
+            
+            <h5>レベル3：完全再インストール</h5>
+            <div class="detailed-steps">
+                <ol>
+                    <li><strong>完全削除</strong><br>
+                        <div class="button-guide">3teneFREEアプリをゴミ箱→ゴミ箱を空に→Mac再起動</div>
+                    </li>
+                    <li><strong>キャッシュクリア</strong><br>
+                        <div class="button-guide">Finder→移動→フォルダへ移動→「~/Library/Caches」→3tene関連フォルダ削除</div>
+                    </li>
+                    <li><strong>最新版再ダウンロード</strong><br>
+                        <div class="button-guide">3tene公式サイト→最新版ダウンロード→Controlキー起動</div>
+                    </li>
+                </ol>
+            </div>
+            
+            <h3>🚨 問題2：フェイストラッキングが動作しない</h3>
+            
+            <h4>🔍 症状と原因</h4>
+            <div class="alert-box">
+                <ul>
+                    <li><strong>カメラ未認識</strong>：プライバシー設定による制限</li>
+                    <li><strong>顔検出失敗</strong>：照明不足または角度問題</li>
+                    <li><strong>遅延・カクツキ</strong>：CPU・GPU性能不足</li>
+                </ul>
+            </div>
+            
+            <h4>💡 詳細解決手順</h4>
+            <div class="detailed-steps">
+                <ol>
+                    <li><strong>カメラ権限の完全設定</strong><br>
+                        <div class="button-guide">システム環境設定→セキュリティとプライバシー→プライバシー→カメラ→3tene、VCam全てにチェック</div>
+                    </li>
+                    <li><strong>照明環境の最適化</strong><br>
+                        <div class="button-guide">正面から均等な照明確保→逆光避ける→顔全体が明るく映る位置調整</div>
+                    </li>
+                    <li><strong>カメラ設定の調整</strong><br>
+                        <div class="button-guide">3tene設定→ウェブカメラ「FaceTime HD Camera」選択→解像度「720p」設定</div>
+                    </li>
+                    <li><strong>パフォーマンス最適化</strong><br>
+                        <div class="button-guide">他のアプリ終了→3tene品質設定「低」→フレームレート30fps制限</div>
+                    </li>
+                </ol>
+            </div>
+            
+            <h3>🚨 問題3：Zoomでアバターが表示されない</h3>
+            
+            <h4>💡 段階的確認・修正手順</h4>
+            <div class="detailed-steps">
+                <ol>
+                    <li><strong>仮想カメラの動作確認</strong><br>
+                        <div class="button-guide">VCamまたはOBS→映像出力確認→プレビュー画面でアバター表示確認</div>
+                    </li>
+                    <li><strong>Zoomのカメラ設定リセット</strong><br>
+                        <div class="button-guide">Zoom終了→再起動→設定→ビデオ→カメラ一覧更新→仮想カメラ再選択</div>
+                    </li>
+                    <li><strong>他のビデオ会議アプリでテスト</strong><br>
+                        <div class="button-guide">Google Meet、Microsoft Teamsで同様にテスト→問題の範囲特定</div>
+                    </li>
+                    <li><strong>macOS再起動</strong><br>
+                        <div class="button-guide">全てのアプリ終了→Macを完全再起動→順番に起動してテスト</div>
+                    </li>
+                </ol>
+            </div>
+            
+            <h3>🚨 問題4：パフォーマンス（動作が重い）</h3>
+            
+            <h4>💡 最適化設定の詳細</h4>
+            <div class="detailed-steps">
+                <ol>
+                    <li><strong>メモリ使用量の確認</strong><br>
+                        <div class="button-guide">アクティビティモニタ起動→メモリタブ→3tene、VRoidの使用量確認</div>
+                    </li>
+                    <li><strong>不要アプリの終了</strong><br>
+                        <div class="button-guide">Command + Tab→使用しないアプリを Command + Q で完全終了</div>
+                    </li>
+                    <li><strong>3tene品質設定の調整</strong><br>
+                        <div class="button-guide">3tene設定→グラフィック品質「低」→影・反射効果オフ→フレームレート制限</div>
+                    </li>
+                    <li><strong>macOS省エネ設定の確認</strong><br>
+                        <div class="button-guide">システム環境設定→省エネルギー→「自動グラフィック切り替え」オフ（MacBook Proの場合）</div>
+                    </li>
+                </ol>
+            </div>
+            
+            <h3>🔄 代替ソフトウェアの検討</h3>
+            
+            <div class="warning-box">
+                <h4>🍎 Mac対応の代替ソリューション</h4>
+                <p>3teneで解決困難な場合は、以下の<strong>Mac対応ソフトウェア</strong>の使用を検討してください：</p>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>🛠️ ソフトウェア</th>
+                            <th>🍎 Mac対応</th>
+                            <th>💰 価格</th>
+                            <th>📝 特徴</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>VSeeFace</td>
+                            <td>✅ 完全対応</td>
+                            <td>無料</td>
+                            <td>VRM標準サポート、軽量</td>
+                        </tr>
+                        <tr>
+                            <td>VTube Studio</td>
+                            <td>✅ iPhone連携</td>
+                            <td>一部有料</td>
+                            <td>高精度、多機能</td>
+                        </tr>
+                        <tr>
+                            <td>VmagicMirror</td>
+                            <td>✅ 常駐型</td>
+                            <td>無料</td>
+                            <td>カメラ不要、キーボード連動</td>
+                        </tr>
+                        <tr>
+                            <td>Unity</td>
+                            <td>✅ フル対応</td>
+                            <td>無料〜</td>
+                            <td>完全カスタマイズ可能</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="workflow-container">
+                <div class="mermaid">
+                    flowchart TD
+                        A[🚨 問題発生] --> B{問題の種類}
+                        B -->|起動しない| C[🔧 起動問題対処]
+                        B -->|顔認識しない| D[👁️ トラッキング修正]
+                        B -->|Zoom映らない| E[📹 仮想カメラ確認]
+                        B -->|動作が重い| F[⚡ パフォーマンス最適化]
+                        C --> G{解決した？}
+                        D --> G
+                        E --> G
+                        F --> G
+                        G -->|No| H[🔄 代替ソフト検討]
+                        G -->|Yes| I[✅ 問題解決]
+                        H --> I
+                        
+                        style A fill:#FF5722,stroke:#fff,color:#fff
+                        style I fill:#4CAF50,stroke:#fff,color:#fff
+                </div>
+            </div>
+            
+            <h3>🎨 例え話</h3>
+            <div class="highlight-box">
+                <p><strong>楽器のメンテナンス</strong>に例えると、トラブルシューティングは「楽器の調律」です。音が出ない時は電源確認、音程が合わない時は細部調整、それでも解決しない時は別の楽器を検討する、という段階的なアプローチが重要です。</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2><span class="icon icon-summary">6</span>まとめ・次のステップと完全活用法</h2>
+            
+            <h3>🎯 達成できたこと</h3>
+            <div class="success-box">
+                <p><span class="emoji">✅</span> <strong>Mac環境</strong>でVRoidスタジオによるオリジナル3Dアバター作成<br>
+                <span class="emoji">✅</span> <strong>3tene</strong>でのリアルタイム顔認識・アニメーション<br>
+                <span class="emoji">✅</span> <strong>仮想カメラ技術</strong>によるZoom連携実現<br>
+                <span class="emoji">✅</span> <strong>Mac特有問題</strong>の解決スキル習得<br>
+                <span class="emoji">✅</span> <strong>代替ソリューション</strong>の理解と選択肢確保</p>
+            </div>
+            
+            <h3>📚 習得した重要技術概念</h3>
+            <ul>
+                <li><span class="term">3Dモデリング</span><span class="explanation">（立体キャラクター作成技術）</span>の基礎理解</li>
+                <li><span class="term">VRMフォーマット</span><span class="explanation">（バーチャルキャラクター標準規格）</span>の活用</li>
+                <li><span class="term">AI機械学習</span><span class="explanation">（人工知能による顔認識）</span>の実用化</li>
+                <li><span class="term">リアルタイムレンダリング</span><span class="explanation">（瞬時3D映像生成）</span>の仕組み</li>
+                <li><span class="term">仮想カメラ技術</span><span class="explanation">（ソフトウェアカメラ機能）</span>の応用</li>
+                <li><span class="term">macOSセキュリティ</span><span class="explanation">（Mac独自の保護機能）</span>への対処法</li>
+            </ul>
+            
+            <h3>🚀 次のステップ・応用展開</h3>
+            
+            <h4>🎨 クリエイティブスキル向上</h4>
+            <div class="highlight-box">
+                <h5>📐 3Dモデリング技術の深化</h5>
+                <ul>
+                    <li><strong>Blender連携</strong>：より高度な3Dカスタマイズ</li>
+                    <li><strong>テクスチャペイント</strong>：オリジナル衣装・アクセサリー作成</li>
+                    <li><strong>ボーン・リギング</strong>：動きのカスタマイズ</li>
+                    <li><strong>シェーダー編集</strong>：光と影の表現向上</li>
+                </ul>
+                
+                <h5>🖼️ ビジュアルデザイン強化</h5>
+                <ul>
+                    <li><strong>AI画像生成</strong>：Stable Diffusion、Midjourneyでのテクスチャ作成</li>
+                    <li><strong>背景制作</strong>：360度パノラマ背景の作成</li>
+                    <li><strong>ライティング</strong>：3D空間の照明技術</li>
+                </ul>
+            </div>
+            
+            <h4>💻 技術スキル拡張</h4>
+            <div class="highlight-box">
+                <h5>📡 配信技術のプロ化</h5>
+                <ul>
+                    <li><strong>OBS Studio完全習得</strong>：シーン切り替え、エフェクト、録画機能</li>
+                    <li><strong>音声処理技術</strong>：リアルタイムボイスチェンジャー、エコー・フィルター</li>
+                    <li><strong>マルチカメラ配信</strong>：複数アングル、ピクチャインピクチャー</li>
+                    <li><strong>インタラクティブ要素</strong>：視聴者コメント連動、リアルタイム投票</li>
+                </ul>
+                
+                <h5>🤖 AI・自動化技術</h5>
+                <ul>
+                    <li><strong>ChatGPT連携</strong>：AIアシスタント機能付きアバター</li>
+                    <li><strong>音声認識</strong>：自動字幕生成、コマンド入力</li>
+                    <li><strong>感情分析</strong>：視聴者反応に応じた表情変化</li>
+                </ul>
+            </div>
+            
+            <h4>💼 ビジネス・教育活用</h4>
+            <div class="highlight-box">
+                <h5>🏢 企業・組織での活用</h5>
+                <ul>
+                    <li><strong>リモートワーク革新</strong>：アバター会議の導入・運用</li>
+                    <li><strong>プレゼンテーション強化</strong>：バーチャル講師による説明</li>
+                    <li><strong>研修・教育コンテンツ</strong>：アバター講師による動画制作</li>
+                    <li><strong>カスタマーサポート</strong>：親しみやすいアバター対応</li>
+                </ul>
+                
+                <h5>🎓 教育・学習分野</h5>
+                <ul>
+                    <li><strong>オンライン授業革新</strong>：キャラクター教師による授業</li>
+                    <li><strong>語学学習</strong>：ネイティブキャラクターとの会話練習</li>
+                    <li><strong>プログラミング教育</strong>：コードを実際に動かすアバター</li>
+                </ul>
+                
+                <h5>🎪 エンターテイメント・コンテンツ</h5>
+                <ul>
+                    <li><strong>VTuber活動</strong>：YouTube、Twitch配信でのキャラクター確立</li>
+                    <li><strong>ゲーム実況</strong>：ゲーム内容に連動したアバター表現</li>
+                    <li><strong>音楽・ダンス</strong>：モーションキャプチャーとの連携</li>
+                </ul>
+            </div>
+            
+            <h3>🔮 未来の技術トレンド</h3>
+            
+            <div class="mac-specific">
+                <h4>🚀 次世代技術への準備</h4>
+                <ul>
+                    <li><strong>メタバース対応</strong>：VRChat、Horizon Worldsでのアバター活用</li>
+                    <li><strong>AR技術連携</strong>：iPhone LiDARスキャナーとの組み合わせ</li>
+                    <li><strong>ブロックチェーン・NFT</strong>：アバターの所有権・収益化</li>
+                    <li><strong>5G・クラウド</strong>：高品質リアルタイム処理のクラウド化</li>
+                    <li><strong>AI大型言語モデル</strong>：自動会話・感情表現機能</li>
+                </ul>
+            </div>
+            
+            <h3>📖 学習リソースと次のアクション</h3>
+            
+            <div class="detailed-steps">
+                <h4>📚 推奨学習順序</h4>
+                <ol>
+                    <li><strong>基礎固め（1-2週間）</strong><br>
+                        今回習得した技術の復習と安定化</li>
+                    <li><strong>応用技術習得（1-2ヶ月）</strong><br>
+                        OBS、Blender等の関連ツール習得</li>
+                    <li><strong>実践・発信（継続）</strong><br>
+                        実際の配信・コンテンツ制作での経験蓄積</li>
+                    <li><strong>専門化・収益化（3-6ヶ月）</strong><br>
+                        特定分野での専門性確立と事業化検討</li>
+                </ol>
+            </div>
+            
+            <div class="workflow-container">
+                <div class="mermaid">
+                    flowchart TD
+                        A[✅ 基礎技術習得完了] --> B{発展方向選択}
+                        B --> C[🎨 クリエイティブ特化]
+                        B --> D[💻 技術エンジニア特化]
+                        B --> E[💼 ビジネス活用特化]
+                        C --> F[🎭 VTuber・配信者]
+                        C --> G[🎨 3Dアーティスト]
+                        D --> H[🤖 AI・自動化エンジニア]
+                        D --> I[📡 配信技術エンジニア]
+                        E --> J[🏢 企業DX推進者]
+                        E --> K[🎓 教育イノベーター]
+                        F --> L[🌟 プロフェッショナル]
+                        G --> L
+                        H --> L
+                        I --> L
+                        J --> L
+                        K --> L
+                        
+                        style A fill:#4CAF50,stroke:#fff,color:#fff
+                        style L fill:#FFC107,stroke:#333,color:#333
+                </div>
+            </div>
+            
+            <h3>🎨 例え話でふりかえり</h3>
+            <div class="highlight-box">
+                <p>今回のMac版VRoidワークショップは<strong>「デジタル職人への第一歩」</strong>でした。3Dという「素材」を理解し、各種ツールという「道具」の使い方を覚え、最終的に「作品」（バーチャル配信）を完成させました。これで皆さんも立派な「デジタルクリエイター」としてのスタートラインに立ったのです！</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <h3>🎉 Mac版VRoidマスターおめでとうございます！</h3>
+            <p>Macの制約を乗り越えて、バーチャルアバターでの表現力を手に入れました。<br>
+            次はあなた独自の創造性で、新しいデジタル体験を生み出してください！</p>
+            <p><strong>未来のバーチャル世界で、またお会いしましょう！</strong> 🚀✨</p>
+        </div>
+    </div>
+</body>
+</html>

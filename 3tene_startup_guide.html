@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3tene起動問題解決ガイド - 超詳細解説</title>
+    
+    <!-- Mermaid.js の読み込み -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'base',
+                securityLevel: 'loose',
+                fontFamily: '"Kaisei Decol", sans-serif',
+                themeVariables: {
+                    primaryColor: '#4CAF50',
+                    primaryTextColor: '#333',
+                    primaryBorderColor: '#009688',
+                    lineColor: '#9575CD',
+                    secondaryColor: '#FFC107',
+                    tertiaryColor: '#E91E63'
+                },
+                flowchart: {
+                    cornerRadius: 15,
+                    curve: 'cardinal',
+                    htmlLabels: true
+                }
+            });
+        });
+    </script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Hiragino Sans', 'Yu Gothic UI', 'Meiryo UI', sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: linear-gradient(135deg, #FAFAFA 0%, #F5F5F5 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #4CAF50 0%, #009688 100%);
+            color: #fff;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+        
+        .section-header {
+            padding: 25px 30px;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .section-header.problem {
+            background: linear-gradient(135deg, #E91E63 0%, #C2185B 100%);
+        }
+        
+        .section-header.mac-specific {
+            background: linear-gradient(135deg, #9575CD 0%, #7B1FA2 100%);
+        }
+        
+        .section-header.security {
+            background: linear-gradient(135deg, #FFC107 0%, #F57C00 100%);
+            color: #333;
+        }
+        
+        .section-header.solution {
+            background: linear-gradient(135deg, #4CAF50 0%, #388E3C 100%);
+        }
+        
+        .section-header.troubleshoot {
+            background: linear-gradient(135deg, #009688 0%, #00695C 100%);
+        }
+        
+        .section-header.alternative {
+            background: linear-gradient(135deg, #FF7043 0%, #D84315 100%);
+        }
+        
+        .section-content {
+            padding: 30px;
+            background: #FAFAFA;
+        }
+        
+        .icon {
+            width: 30px;
+            height: 30px;
+            display: inline-block;
+            position: relative;
+        }
+        
+        .icon::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: currentColor;
+        }
+        
+        .explanation-box {
+            background: #fff;
+            border-left: 5px solid #4CAF50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.05);
+        }
+        
+        .explanation-title {
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .step {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #9575CD;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .step-number {
+            background: #9575CD;
+            color: #fff;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #FFC107 0%, #FFE082 100%);
+            padding: 3px 8px;
+            border-radius: 5px;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        .warning {
+            background: #FFE0E0;
+            border: 2px solid #E91E63;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .warning-title {
+            color: #E91E63;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tip {
+            background: #E8F5E8;
+            border: 2px solid #4CAF50;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .tip-title {
+            color: #4CAF50;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .flow-chart {
+            background: #fff;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+        
+        .chart-title {
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 30px;
+        }
+        
+        .terminology {
+            background: #F3E5F5;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #9575CD;
+        }
+        
+        .term {
+            font-weight: bold;
+            color: #9575CD;
+        }
+        
+        .definition {
+            margin-top: 5px;
+            color: #666;
+        }
+        
+        ol, ul {
+            padding-left: 25px;
+            margin: 15px 0;
+        }
+        
+        li {
+            margin: 8px 0;
+        }
+        
+        .conclusion {
+            background: linear-gradient(135deg, #4CAF50 0%, #009688 100%);
+            color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 40px;
+            text-align: center;
+        }
+        
+        .conclusion h3 {
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .section-header {
+                padding: 20px;
+                font-size: 1.3em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🖥️ 3tene起動問題解決ガイド</h1>
+            <div class="subtitle">超初心者向け完全図解マニュアル</div>
+        </div>
+        
+        <div class="content">
+            <!-- 問題の概要 -->
+            <div class="section">
+                <div class="section-header problem">
+                    <div class="icon">🚨</div>
+                    <span>まず確認すべき基本的な問題</span>
+                </div>
+                <div class="section-content">
+                    <div class="explanation-box">
+                        <div class="explanation-title">
+                            📋 結論：3teneが起動しない主な原因は3つ
+                        </div>
+                        <p>3tene（スリーテン）というVTuber配信ソフトが起動できない問題は、主に<span class="highlight">M2 Mac特有の不具合</span>、<span class="highlight">Macのセキュリティ設定</span>、<span class="highlight">権限設定の問題</span>が原因です。</p>
+                    </div>
+                    
+                    <div class="terminology">
+                        <div class="term">🔍 3tene（スリーテン）とは？</div>
+                        <div class="definition">VTuber（バーチャルユーチューバー）が使用する、顔の動きを3Dキャラクターに反映させるソフトウェアです。Webカメラで顔を認識して、リアルタイムでアバターを動かすことができます。</div>
+                    </div>
+                    
+                    <div class="terminology">
+                        <div class="term">🔍 M2 Macとは？</div>
+                        <div class="definition">Apple社が2022年に発表した新しいプロセッサー（コンピューターの頭脳部分）を搭載したMacコンピューターです。従来のIntel製プロセッサーとは異なる設計のため、一部のソフトウェアで互換性問題が発生することがあります。</div>
+                    </div>
+                    
+                    <div class="flow-chart">
+                        <div class="chart-title">🔄 問題診断フローチャート</div>
+                        <div class="mermaid">
+                            flowchart TD
+                                A[3teneが起動しない😰] --> B{使用しているMacは？}
+                                B -->|M2 Mac| C[M2特有の問題🛠️]
+                                B -->|Intel Mac/M1 Mac| D{エラーメッセージは？}
+                                C --> E[アップデート待ち/代替手段]
+                                D -->|開発元が未確認| F[セキュリティ設定変更]
+                                D -->|カメラアクセス拒否| G[プライバシー設定変更]
+                                D -->|固まる/応答なし| H[完全再インストール]
+                                F --> I[解決✅]
+                                G --> I
+                                H --> I
+                                E --> J[代替ソフト使用]
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- M2 Mac特有の問題 -->
+            <div class="section">
+                <div class="section-header mac-specific">
+                    <div class="icon">💻</div>
+                    <span>M2 Mac特有の起動問題</span>
+                </div>
+                <div class="section-content">
+                    <div class="explanation-box">
+                        <div class="explanation-title">
+                            📋 結論：M2 Macでは既知の不具合が存在
+                        </div>
+                        <p>M2チップ搭載Macでは、3teneの起動ができない<span class="highlight">既知の不具合</span>が確認されています。これは3tene側の問題で、次回アップデートで修正予定です。</p>
+                    </div>
+                    
+                    <div class="warning">
+                        <div class="warning-title">
+                            ⚠️ 重要な背景情報
+                        </div>
+                        <p>Apple社がIntel製プロセッサーから独自のApple Siliconプロセッサー（M1、M2、M3など）に移行したことで、多くのソフトウェアで互換性問題が発生しています。3teneもその影響を受けており、特にM2 Macでは深刻な起動問題が報告されています。</p>
+                    </div>
+                    
+                    <div class="terminology">
+                        <div class="term">🔍 Apple Siliconとは？</div>
+                        <div class="definition">Apple社が独自開発したプロセッサーの総称です。従来のIntel製プロセッサーとは根本的に設計が異なるため、一部のソフトウェアが正常に動作しない場合があります。M1、M2、M3などの種類があります。</div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-header">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <strong>Macのプロセッサー確認方法</strong>
+                                <ol>
+                                    <li><span class="highlight">Appleメニュー</span>（画面左上のリンゴマーク）をクリック</li>
+                                    <li><span class="highlight">「このMacについて」</span>を選択</li>
+                                    <li><span class="highlight">「プロセッサ」</span>または<span class="highlight">「チップ」</span>の項目を確認</li>
+                                    <li>「Apple M2」と表示されていればM2 Mac</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tip">
+                        <div class="tip-title">
+                            💡 具体例：M2 Mac判別方法
+                        </div>
+                        <p>例えば、MacBook Air (2022年モデル)、MacBook Pro 13インチ (2022年モデル)、Mac mini (2023年モデル) などがM2 Macに該当します。購入時期が2022年以降で「M2」という表示があれば、この問題に該当する可能性が高いです。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- セキュリティ設定の問題 -->
+            <div class="section">
+                <div class="section-header security">
+                    <div class="icon">🔒</div>
+                    <span>Macのセキュリティ設定による問題</span>
+                </div>
+                <div class="section-content">
+                    <div class="explanation-box">
+                        <div class="explanation-title">
+                            📋 結論：Macのセキュリティ機能が3teneをブロック
+                        </div>
+                        <p>macOSには<span class="highlight">Gatekeeper</span>というセキュリティ機能があり、App Store以外からダウンロードしたアプリを自動的にブロックします。3teneは公式サイトからダウンロードするため、この機能に引っかかることがあります。</p>
+                    </div>
+                    
+                    <div class="terminology">
+                        <div class="term">🔍 Gatekeeperとは？</div>
+                        <div class="definition">macOSに搭載された不正なソフトウェアからMacを守るセキュリティ機能です。開発者が身元を証明していないアプリや、Apple認証を受けていないアプリの実行を制限します。安全性のための機能ですが、正当なソフトでも起動できなくなることがあります。</div>
+                    </div>
+                    
+                    <div class="flow-chart">
+                        <div class="chart-title">🔐 セキュリティ解除手順</div>
+                        <div class="mermaid">
+                            flowchart TD
+                                A[3teneをダブルクリック] --> B[開発元が未確認のため開けません]
+                                B --> C[Controlキーを押しながらクリック]
+                                C --> D[開くメニューを選択]
+                                D --> E[セキュリティ警告が表示]
+                                E --> F[開くボタンをクリック]
+                                F --> G[3tene起動成功✅]
+                                
+                                B --> H[システム設定から解除]
+                                H --> I[セキュリティとプライバシー]
+                                I --> J[一般タブ]
+                                J --> K[このまま開くをクリック]
+                                K --> G
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-header">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <strong>Control+クリック方式での解除</strong>
+                                <ol>
+                                    <li><span class="highlight">Finder</span>（青いフォルダアイコン）を開く</li>
+                                    <li><span class="highlight">ダウンロード</span>フォルダを選択</li>
+                                    <li><span class="highlight">3teneFREE</span>フォルダを探す</li>
+                                    <li><span class="highlight">Controlキー</span>を押しながら3teneFREEアプリをクリック</li>
+                                    <li>表示されたメニューから<span class="highlight">「開く」</span>を選択</li>
+                                    <li>警告が出たら<span class="highlight">「開く」</span>をクリック</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-header">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <strong>システム設定からの解除</strong>
+                                <ol>
+                                    <li><span class="highlight">Appleメニュー</span>をクリック</li>
+                                    <li><span class="highlight">「システム設定」</span>を選択</li>
+                                    <li><span class="highlight">「プライバシーとセキュリティ」</span>をクリック</li>
+                                    <li><span class="highlight">「セキュリティ」</span>セクションを確認</li>
+                                    <li><span class="highlight">「このまま開く」</span>ボタンがあればクリック</li>
+                                    <li>パスワードを入力して確認</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tip">
+                        <div class="tip-title">
+                            💡 例え話：セキュリティ設定は家の鍵のようなもの
+                        </div>
+                        <p>Macのセキュリティ設定は、家の鍵のようなものです。知らない人（未認証のアプリ）が家（Mac）に入ろうとすると、自動的にドアをロックします。3teneは信頼できる友人（正当なソフト）ですが、初回訪問時は身分証明が必要というイメージです。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 具体的な解決手順 -->
+            <div class="section">
+                <div class="section-header solution">
+                    <div class="icon">🛠️</div>
+                    <span>具体的な解決手順</span>
+                </div>
+                <div class="section-content">
+                    <div class="explanation-box">
+                        <div class="explanation-title">
+                            📋 結論：段階的なアプローチで確実に解決
+                        </div>
+                        <p>3teneの起動問題は、<span class="highlight">基本的な起動方法</span>、<span class="highlight">緊急起動モード</span>、<span class="highlight">権限設定の確認</span>、<span class="highlight">完全再インストール</span>の順番で試していくことで、ほぼ確実に解決できます。</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-header">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <strong>正しい起動方法を試す</strong>
+                            </div>
+                        </div>
+                        <div class="terminology">
+                            <div class="term">🔍 なぜこの手順が必要？</div>
+                            <div class="definition">多くのユーザーは、ダウンロードしたアプリをそのままダブルクリックで起動しようとしますが、セキュリティ設定により初回起動に失敗することが多いです。適切な手順を踏むことで、セキュリティを保ちながら安全に起動できます。</div>
+                        </div>
+                        <ol>
+                            <li><span class="highlight">Finder</span>を開く（Dockの青いフォルダアイコン）</li>
+                            <li><span class="highlight">「アプリケーション」</span>フォルダまたは<span class="highlight">「ダウンロード」</span>フォルダを開く</li>
+                            <li><span class="highlight">3teneFREE</span>フォルダを探す</li>
+                            <li><span class="highlight">Controlキー</span>を押しながら3teneFREEアプリをクリック</li>
+                            <li>表示されたメニューから<span class="highlight">「開く」</span>を選択</li>
+                            <li>セキュリティ警告が出た場合は<span class="highlight">「開く」</span>をクリック</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-header">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <strong>緊急起動モードを試す</strong>
+                            </div>
+                        </div>
+                        <div class="warning">
+                            <div class="warning-title">
+                                ⚠️ 緊急起動モードの背景
+                            </div>
+                            <p>3teneが通常起動しない場合の特別な起動方法です。動画保存機能を無効化することで、システムリソースの使用量を減らし、起動障害を回避します。</p>
+                        </div>
+                        
+                        <div class="terminology">
+                            <div class="term">🔍 Altキーとは？</div>
+                            <div class="definition">Macキーボードにある特殊キーの一つで、「Option」キーとも呼ばれます。このキーを押しながらアプリを起動すると、特別なモードで起動することがあります。Windowsの「Alt」キーに相当します。</div>
+                        </div>
+                        
+                        <strong>Altキーを使った起動方法：</strong>
+                        <ol>
+                            <li><span class="highlight">Altキー（Optionキー）</span>を押しながら3teneアプリをダブルクリック</li>
+                            <li>動画保存機能が無効化され、軽量モードで起動</li>
+                            <li>起動障害が回避される可能性が高い</li>
+                        </ol>
+                        
+                        <strong>「動画無効.txt」ファイル作成方法：</strong>
+                        <ol>
+                            <li><span class="highlight">テキストエディット</span>を開く（Launchpadから検索）</li>
+                            <li><span class="highlight">新規文書</span>を作成</li>
+                            <li>何も入力せず、<span class="highlight">「動画無効.txt」</span>という名前で保存</li>
+                            <li>このファイルを3teneのインストールフォルダに配置</li>
+                            <li>3teneを通常通り起動</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-header">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <strong>システム環境設定の確認</strong>
+                            </div>
+                        </div>
+                        
+                        <div class="terminology">
+                            <div class="term">🔍 プライバシー設定とは？</div>
+                            <div class="definition">macOSがアプリケーションのカメラ、マイク、位置情報などへのアクセスを制御する機能です。3teneは顔認識のためにカメラが必要なので、この許可が必要です。</div>
+                        </div>
+                        
+                        <strong>セキュリティとプライバシーの設定：</strong>
+                        <ol>
+                            <li><span class="highlight">Appleメニュー</span>（画面左上のリンゴマーク）をクリック</li>
+                            <li><span class="highlight">「システム設定」</span>を選択</li>
+                            <li><span class="highlight">「プライバシーとセキュリティ」</span>をクリック</li>
+                            <li><span class="highlight">「一般」</span>タブを確認</li>
+                            <li><span class="highlight">「このまま開く」</span>ボタンがあればクリック</li>
+                        </ol>
+                        
+                        <strong>カメラとマイクの許可設定：</strong>
+                        <ol>
+                            <li><span class="highlight">「プライバシーとセキュリティ」</span>の<span class="highlight">「プライバシー」</span>タブをクリック</li>
+                            <li>左側から<span class="highlight">「カメラ」</span>を選択</li>
+                            <li><span class="highlight">3tene</span>にチェックを入れる</li>
+                            <li>同様に<span class="highlight">「マイク」</span>も許可する</li>
+                            <li>設定変更後、3teneを再起動</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="tip">
+                        <div class="tip-title">
+                            💡 具体例：カメラ許可の重要性
+                        </div>
+                        <p>3teneはあなたの顔の動きを読み取ってアバターに反映させるため、カメラアクセスが必須です。これは、スマートフォンでカメラアプリを使う時に「カメラへのアクセスを許可しますか？」と聞かれるのと同じ仕組みです。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- トラブルシューティング -->
+            <div class="section">
+                <div class="section-header troubleshoot">
+                    <div class="icon">🔧</div>
+                    <span>トラブルシューティング</span>
+                </div>
+                <div class="section-content">
+                    <div class="explanation-box">
+                        <div class="explanation-title">
+                            📋 結論：症状別の対処法で効率的に解決
+                        </div>
+                        <p>3teneの起動トラブルは、<span class="highlight">画面が固まる</span>、<span class="highlight">「少々お待ちください」から進まない</span>、<span class="highlight">ウイルス対策ソフトの干渉</span>など、症状によって対処法が異なります。</p>
+                    </div>
+                    
+                    <div class="flow-chart">
+                        <div class="chart-title">🔍 症状別診断チャート</div>
+                        <div class="mermaid">
+                            flowchart TD
+                                A[起動トラブル発生] --> B{症状は？}
+                                B -->|画面が固まる| C[ESCキーで終了]
+                                B -->|少々お待ちくださいが続く| D[5分待機]
+                                B -->|すぐに終了する| E[ウイルス対策確認]
+                                C --> F[完全終了後再起動]
+                                D --> G[他アプリ終了]
+                                E --> H[例外リスト追加]
+                                F --> I[解決確認]
+                                G --> I
+                                H --> I
+                                I -->|解決しない| J[完全再インストール]
+                                I -->|解決| K[正常使用✅]
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-header">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <strong>起動時に画面が固まる場合</strong>
+                            </div>
+                        </div>
+                        <div class="terminology">
+                            <div class="term">🔍 なぜ画面が固まるのか？</div>
+                            <div class="definition">アプリケーションが大量のメモリ（RAM）を使用したり、他のソフトウェアと競合したりすると、システムが応答しなくなることがあります。これを「フリーズ」と呼びます。</div>
+                        </div>
+                        <ol>
+                            <li><span class="highlight">ESCキー</span>を押して3teneを終了</li>
+                            <li><span class="highlight">「はい(Y)」</span>を選択して完全終了</li>
+                            <li><span class="highlight">数分待機</span>してからMacを再起動</li>
+                            <li>他のアプリケーションを全て終了してから3teneを起動</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-header">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <strong>「少々お待ちください」から進まない場合</strong>
+                            </div>
+                        </div>
+                        <div class="warning">
+                            <div class="warning-title">
+                                ⚠️ 初回起動は時間がかかる
+                            </div>
+                            <p>3teneの初回起動時は、顔認識エンジンの初期化や設定ファイルの作成などで通常より長い時間がかかります。特に古いMacや、ストレージ容量が少ない場合は顕著です。</p>
+                        </div>
+                        <ol>
+                            <li><span class="highlight">最低5分程度</span>は待機する（初回起動は特に時間がかかる）</li>
+                            <li>他のアプリケーションを<span class="highlight">全て終了</span>する</li>
+                            <li><span class="highlight">Macを再起動</span>してから再試行</li>
+                            <li><span class="highlight">ストレージ容量</span>を確認（空きが少ないと遅くなる）</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-header">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <strong>ウイルス対策ソフトが原因の場合</strong>
+                            </div>
+                        </div>
+                        <div class="terminology">
+                            <div class="term">🔍 ウイルス対策ソフトとは？</div>
+                            <div class="definition">コンピューターを悪意のあるソフトウェア（ウイルス、マルウェア）から守るためのソフトウェアです。時として正当なアプリケーションも脅威と誤認識してブロックすることがあります。</div>
+                        </div>
+                        <ol>
+                            <li><span class="highlight">ウイルス対策ソフト</span>を一時的に無効化</li>
+                            <li><span class="highlight">3teneを例外リスト</span>（ホワイトリスト）に追加</li>
+                            <li><span class="highlight">ファイアウォール設定</span>を確認</li>
+                            <li>設定変更後、3teneを再起動</li>
+                        </ol>
+                        
+                        <div class="tip">
+                            <div class="tip-title">
+                                💡 例え話：ウイルス対策ソフトは過保護な警備員
+                            </div>
+                            <p>ウイルス対策ソフトは建物の警備員のようなものです。時として、正当な来訪者（3tene）も怪しい人物と誤解して入場を拒否することがあります。身分証明（例外リスト登録）をすることで、スムーズに入場できるようになります。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 代替ソリューション -->
+            <div class="section">
+                <div class="section-header alternative">
+                    <div class="icon">🔄</div>
+                    <span>代替ソリューション</span>
+                </div>
+                <div class="section-content">
+                    <div class="explanation-box">
+                        <div class="explanation-title">
+                            📋 結論：3tene以外にも優秀な選択肢が存在
+                        </div>
+                        <p>M2 Macで3teneがどうしても動作しない場合、<span class="highlight">VSeeFace</span>、<span class="highlight">VTube Studio</span>、<span class="highlight">VmagicMirror</span>などの代替ソフトウェアが利用できます。それぞれ特徴が異なるため、用途に応じて選択できます。</p>
+                    </div>
+                    
+                    <div class="flow-chart">
+                        <div class="chart-title">🎯 代替ソフト選択ガイド</div>
+                        <div class="mermaid">
+                            flowchart TD
+                                A[3teneが使用できない] --> B{重視する機能は？}
+                                B -->|無料で高機能| C[VSeeFace]
+                                B -->|iPhone連携| D[VTube Studio]
+                                B -->|軽量動作| E[VmagicMirror]
+                                B -->|多機能| F[Animaze]
+                                C --> G[VRM対応<br/>高精度トラッキング]
+                                D --> H[ARKit対応<br/>高品質表情認識]
+                                E --> I[常設配信向け<br/>CPU負荷軽減]
+                                F --> J[プロ仕様<br/>商用利用可]
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-header">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <strong>VSeeFace（ブイシーフェイス）</strong>
+                            </div>
+                        </div>
+                        <div class="terminology">
+                            <div class="term">🔍 VRMとは？</div>
+                            <div class="definition">VRM（Virtual Reality Model）は、VRアバター用の3Dモデルファイル形式です。異なるソフトウェア間でアバターを共有できる標準規格として開発されました。</div>
+                        </div>
+                        <strong>特徴：</strong>
+                        <ul>
+                            <li><span class="highlight">完全無料</span>でVRM対応</li>
+                            <li><span class="highlight">高精度</span>な顔追跡機能</li>
+                            <li><span class="highlight">M2 Mac対応</span>済み</li>
+                            <li>豊富なカスタマイズ設定</li>
+                        </ul>
+                        <strong>ダウンロード：</strong>VSeeFace公式サイトから入手可能
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-header">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <strong>VTube Studio（ブイチューブスタジオ）</strong>
+                            </div>
+                        </div>
+                        <div class="terminology">
+                            <div class="term">🔍 ARKitとは？</div>
+                            <div class="definition">Apple社が開発した拡張現実（AR）技術です。iPhoneのカメラとセンサーを使用して、非常に高精度な顔認識と表情追跡を実現します。</div>
+                        </div>
+                        <strong>特徴：</strong>
+                        <ul>
+                            <li><span class="highlight">iPhone連携</span>でARKit使用可能</li>
+                            <li><span class="highlight">高品質</span>な表情認識</li>
+                            <li><span class="highlight">Live2D対応</span></li>
+                            <li>プロのVTuberも使用する信頼性</li>
+                        </ul>
+                        <strong>料金：</strong>基本無料、有料版でより多機能
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-header">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <strong>VmagicMirror（ブイマジックミラー）</strong>
+                            </div>
+                        </div>
+                        <strong>特徴：</strong>
+                        <ul>
+                            <li><span class="highlight">Webカメラ不要</span>（キーボード・マウス操作で動作）</li>
+                            <li><span class="highlight">常設起動</span>に適している</li>
+                            <li><span class="highlight">CPU負荷が軽い</span></li>
+                            <li>長時間配信向け</li>
+                        </ul>
+                        <strong>用途：</strong>ゲーム配信やデスクワーク配信に最適
+                    </div>
+                    
+                    <div class="tip">
+                        <div class="tip-title">
+                            💡 具体例：用途別おすすめソフト
+                        </div>
+                        <ul>
+                            <li><strong>雑談配信メイン：</strong>VSeeFace（高精度な表情認識）</li>
+                            <li><strong>歌配信・表情重視：</strong>VTube Studio + iPhone（最高品質）</li>
+                            <li><strong>ゲーム配信：</strong>VmagicMirror（軽量で安定）</li>
+                            <li><strong>商用利用：</strong>Animaze（プロ仕様）</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="conclusion">
+                <h3>🎉 まとめ</h3>
+                <p>3teneの起動問題は、段階的なアプローチで必ず解決できます。M2 Macの既知問題については公式アップデートを待つか、優秀な代替ソフトを使用することで、VTuber活動を継続できます。重要なのは、一つの方法で諦めずに、複数の解決手段を試すことです。</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

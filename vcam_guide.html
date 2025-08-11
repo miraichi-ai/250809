@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VCam完全図解ガイド - 小学生でもわかる詳細マニュアル</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Mermaid.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'base',
+                securityLevel: 'loose',
+                fontFamily: '"Kaisei Decol", sans-serif',
+                themeVariables: {
+                    primaryColor: '#4CAF50',
+                    primaryTextColor: '#2E2E2E',
+                    primaryBorderColor: '#009688',
+                    lineColor: '#009688',
+                    secondaryColor: '#FFC107',
+                    tertiaryColor: '#9575CD'
+                },
+                flowchart: {
+                    cornerRadius: 15,
+                    curve: 'cardinal',
+                    htmlLabels: true
+                }
+            });
+        });
+    </script>
+    
+    <style>
+        :root {
+            --main-color: #4CAF50;
+            --accent-1: #9575CD;
+            --accent-2: #FFC107;
+            --accent-3: #009688;
+            --accent-4: #E91E63;
+            --bg-color: #FAFAFA;
+            --text-color: #2E2E2E;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--main-color), var(--accent-3));
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .header h1 {
+            font-family: 'Kaisei Decol', serif;
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .section {
+            background: white;
+            margin: 30px 0;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            border-left: 6px solid var(--main-color);
+        }
+
+        .section-title {
+            font-family: 'Kaisei Decol', serif;
+            font-size: 2.2em;
+            color: var(--main-color);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            background: var(--main-color);
+            color: white;
+        }
+
+        .subsection {
+            margin: 25px 0;
+            padding: 20px;
+            background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-3);
+        }
+
+        .subsection h3 {
+            color: var(--accent-3);
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .term-box {
+            background: linear-gradient(135deg, var(--accent-2), #ffeb3b);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid var(--accent-4);
+        }
+
+        .term-title {
+            font-weight: bold;
+            color: var(--text-color);
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+
+        .step-container {
+            display: grid;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .step {
+            background: linear-gradient(145deg, #ffffff, #f1f3f4);
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid var(--accent-1);
+            position: relative;
+        }
+
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: var(--accent-1);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .step h4 {
+            color: var(--accent-1);
+            margin-bottom: 10px;
+            margin-top: 5px;
+            font-size: 1.2em;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, var(--accent-3), #26a69a);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .example-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, var(--accent-4), #f06292);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid #c2185b;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, var(--main-color), #66bb6a);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid #388e3c;
+        }
+
+        .diagram-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .quick-start {
+            background: linear-gradient(135deg, var(--accent-2), #fff176);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 3px solid var(--accent-4);
+        }
+
+        .quick-start h2 {
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .trouble-section {
+            background: linear-gradient(135deg, #ffebee, #fce4ec);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            border-left: 6px solid var(--accent-4);
+        }
+
+        .os-versions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .os-version {
+            background: linear-gradient(145deg, #e8f5e8, #c8e6c9);
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid var(--main-color);
+        }
+
+        .os-version h4 {
+            color: var(--main-color);
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .app-card {
+            background: linear-gradient(145deg, #f3e5f5, #e1bee7);
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid var(--accent-1);
+            text-align: center;
+        }
+
+        .app-card h4 {
+            color: var(--accent-1);
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(145deg, #fff3e0, #ffe0b2);
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid var(--accent-2);
+            text-align: center;
+        }
+
+        .feature-card h5 {
+            color: var(--text-color);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, var(--accent-2), transparent);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .section-title {
+                font-size: 1.8em;
+            }
+            
+            .os-versions,
+            .app-grid,
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎭 VCam完全図解ガイド</h1>
+            <p>小学生でもわかる！アバターで会議に参加する方法</p>
+        </div>
+
+        <!-- 前提整理セクション -->
+        <div class="section">
+            <h2 class="section-title">
+                <div class="icon">📋</div>
+                前提整理：VCamって何？何ができるの？
+            </h2>
+            
+            <div class="subsection">
+                <h3>🎯 結論：VCamはアバターになりきれる魔法のアプリ</h3>
+                <p><span class="highlight">VCam（ブイカム）</span>は、あなたの顔の代わりに<span class="highlight">アバター（仮想のキャラクター）</span>でZoomやGoogle Meetの会議に参加できるMac専用アプリです。</p>
+            </div>
+
+            <div class="subsection">
+                <h3>🌟 背景：なぜアバターが必要なの？</h3>
+                <p>リモートワークが増えて、毎日のオンライン会議で「顔を出したくない」「髪型が気になる」「部屋を見られたくない」という悩みが生まれました。VCamはそんな悩みを解決してくれます。</p>
+            </div>
+
+            <div class="term-box">
+                <div class="term-title">📚 専門用語解説</div>
+                <p><strong>仮想カメラ（Virtual Camera）</strong>＝物理的なWebカメラの代わりに、アプリが作った映像を「見えないケーブル」で各アプリに送る仕組み</p>
+                <p><strong>VRM（Virtual Reality Model）</strong>＝アバターの「着ぐるみファイル」。見た目や表情の情報が入っている</p>
+                <p><strong>トラッキング（Tracking）</strong>＝あなたの顔や手の動きを「操り人形の糸」のようにアバターに伝える技術</p>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h5>👁️ 顔トラッキング</h5>
+                    <p>まばたき、口の動きを自動で追跡</p>
+                </div>
+                <div class="feature-card">
+                    <h5>👋 手・指トラッキング</h5>
+                    <p>手振りや指の動きも表現</p>
+                </div>
+                <div class="feature-card">
+                    <h5>😊 絵文字リアクション</h5>
+                    <p>スタンプ感覚でリアクション</p>
+                </div>
+                <div class="feature-card">
+                    <h5>📝 テロップ表示</h5>
+                    <p>YouTuber風の字幕機能</p>
+                </div>
+                <div class="feature-card">
+                    <h5>🎨 画面効果</h5>
+                    <p>明るさや色味の調整</p>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">🏡 具体例：在宅ワークでの使用シーン</div>
+                <p>朝の会議で寝癖がひどい時も、VCamならきちんとしたアバターで参加できます。部屋が散らかっていても、背景も自由に変更可能です。</p>
+            </div>
+        </div>
+
+        <!-- システム要件セクション -->
+        <div class="section">
+            <h2 class="section-title">
+                <div class="icon">💻</div>
+                システム要件：どんなMacが必要？
+            </h2>
+
+            <div class="subsection">
+                <h3>🎯 結論：macOS 13以上のMacなら使える</h3>
+                
+                <div class="os-versions">
+                    <div class="os-version">
+                        <h4>✅ 推奨環境</h4>
+                        <ul>
+                            <li><strong>OS</strong>：macOS 14以上</li>
+                            <li><strong>チップ</strong>：Apple Silicon（M1/M2/M3等）</li>
+                            <li><strong>メモリ</strong>：8GB以上</li>
+                        </ul>
+                    </div>
+                    <div class="os-version">
+                        <h4>⚠️ 最低要件</h4>
+                        <ul>
+                            <li><strong>OS</strong>：macOS 13以上</li>
+                            <li><strong>チップ</strong>：Intel Mac でも動作</li>
+                            <li><strong>メモリ</strong>：4GB以上</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ 重要な注意点</strong><br>
+                    VCamはMac専用です。Windowsでは使用できません。
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>🔧 macOS 15以降の特別な設定</h3>
+                <p>新しいmacOS 15では、<span class="highlight">「カメラ拡張（Camera Extension）」</span>という機能を手動で有効にする必要があります。</p>
+                
+                <div class="term-box">
+                    <div class="term-title">📚 専門用語解説</div>
+                    <p><strong>Camera Extension（カメラ拡張）</strong>＝「このアプリをカメラとして使ってOK」というMacへの申請・登録システム</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- インストール手順セクション -->
+        <div class="section">
+            <h2 class="section-title">
+                <div class="icon">📦</div>
+                手順A：インストール（ダウンロード〜起動まで）
+            </h2>
+
+            <div class="subsection">
+                <h3>🎯 結論：5つのステップで完了</h3>
+                
+                <div class="diagram-container">
+                    <div class="mermaid">
+                        flowchart TD
+                            A[📥 DMGファイルをダウンロード] --> B[📁 Applicationsフォルダにドラッグ&ドロップ]
+                            B --> C[🚀 VCamを起動]
+                            C --> D[🔒 セキュリティ警告で「開く」を選択]
+                            D --> E[✅ 権限許可（マイク・ネットワーク）]
+                            E --> F[⚙️ システム設定で詳細権限を有効化]
+                    </div>
+                </div>
+
+                <div class="step-container">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h4>📥 DMGファイルを開く</h4>
+                        <p>ダウンロードしたVCamの<span class="highlight">DMGファイル</span>をダブルクリックして開きます。</p>
+                        <div class="term-box">
+                            <div class="term-title">📚 専門用語解説</div>
+                            <p><strong>DMGファイル</strong>＝Macでよく使われるアプリの「箱」のようなファイル。中にアプリが入っている</p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h4>📁 アプリケーションフォルダへ移動</h4>
+                        <p>VCamアプリを<span class="highlight">「Applications（アプリケーション）」フォルダ</span>へドラッグ＆ドロップします。</p>
+                        <div class="example-box">
+                            <div class="example-title">🖱️ 具体的な操作方法</div>
+                            <p>DMGウィンドウに表示されるVCamアイコンを、同じウィンドウのApplicationsフォルダアイコンの上にドラッグして離します。</p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h4>🚀 VCamを起動</h4>
+                        <p>Launchpad または Applications フォルダから「VCam」を起動します。</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h4>🔒 セキュリティ警告への対応</h4>
+                        <p>初回起動時に表示される警告で「開く」や「許可」を選択します。</p>
+                        <div class="warning-box">
+                            <strong>⚠️ もし警告で止まったら</strong><br>
+                            システム設定 → プライバシーとセキュリティ → セキュリティ で「このまま開く」をクリック
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <h4>✅ 権限の許可</h4>
+                        <p>マイクやネットワーク使用の許可を求められたら、すべて「許可」を選択します。</p>
+                        <div class="tip-box">
+                            <strong>💡 権限が必要な理由</strong><br>
+                            マイク：音声でアバターの口を動かすため<br>
+                            ネットワーク：VRoid Hubからアバターをダウンロードするため
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>🔄 権限の後からの設定方法</h3>
+                <p>権限を拒否してしまった場合や、後で変更したい場合は、<span class="highlight">システム設定</span>から変更できます。</p>
+                
+                <div class="example-box">
+                    <div class="example-title">🛠️ 権限変更の手順</div>
+                    <ol>
+                        <li>システム設定を開く</li>
+                        <li>「プライバシーとセキュリティ」を選択</li>
+                        <li>「カメラ」「マイク」「ネットワーク」でVCamを有効化</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Camera Extension設定セクション -->
+        <div class="section">
+            <h2 class="section-title">
+                <div class="icon">📹</div>
+                手順B：仮想カメラ（Camera Extension）を有効化
+            </h2>
+
+            <div class="subsection">
+                <h3>🎯 結論：macOSバージョンで手順が異なる</h3>
+                <p><span class="highlight">Camera Extension（カメラ拡張）</span>は、VCamを「カメラ」として他のアプリで使えるようにする重要な機能です。</p>
+
+                <div class="diagram-container">
+                    <div class="mermaid">
+                        flowchart TD
+                            A[macOSのバージョン確認] --> B{macOS 15以降？}
+                            B -->|Yes| C[システム設定 → 一般]
+                            B -->|No| D[自動で有効化される]
+                            C --> E[ログイン項目と拡張機能]
+                            E --> F[カメラ機能拡張]
+                            F --> G[VCamのトグルをON]
+                            G --> H[アプリ再起動]
+                            D --> I[会議アプリでVCamを選択]
+                            H --> I
+                    </div>
+                </div>
+
+                <div class="os-versions">
+                    <div class="os-version">
+                        <h4>🆕 macOS 15以降の設定方法</h4>
+                        <ol>
+                            <li><strong>システム設定</strong>を開く</li>
+                            <li><strong>一般</strong> → <strong>ログイン項目と拡張機能</strong> を選択</li>
+                            <li><strong>カメラ機能拡張</strong> をクリック</li>
+                            <li>「ⓘ」マーク（情報ボタン）をクリック</li>
+                            <li><strong>VCam.app の CameraExtension</strong> を有効化（トグルをON）</li>
+                            <li>必要に応じてMacや会議アプリを再起動</li>
+                        </ol>
+                    </div>
+                    <div class="os-version">
+                        <h4>📱 macOS 13〜14の場合</h4>
+                        <p>VCamは<span class="highlight">Core Media I/O</span>のカメラ拡張に対応済みで、通常は起動すれば自動的に仮想カメラとして利用できます。</p>
+                        <div class="tip-box">
+                            <strong>💡 もし認識されない場合</strong><br>
+                            会議アプリを再起動すると解決することが多いです
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>🔍 背景：なぜCamera Extensionが必要？</h3>
+                <p>macOS 15からセキュリティが強化され、アプリが「カメラのふり」をするには明示的な許可が必要になりました。</p>
+                
+                <div class="example-box">
+                    <div class="example-title">🏠 例え話：カメラ拡張は「入館証」のようなもの</div>
+                    <p>VCamがZoomなどの会議アプリに「僕もカメラだよ！」と言うために必要な「入館証」のようなものです。この証明書がないと、会議アプリがVCamを認識してくれません。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- VCam初回設定セクション -->
+        <div class="section">
+            <h2 class="section-title">
+                <div class="icon">⚙️</div>
+                手順C：VCamの初回設定
+            </h2>
+
+            <div class="subsection">
+                <h3>🎯 結論：4つの基本設定で使用準備完了</h3>
+                
+                <div class="step-container">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h4>🚀 VCamを起動</h4>
+                        <p>ApplicationsフォルダまたはLaunchpadからVCamを起動します。</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h4>⚙️ 設定ボタンを開く</h4>
+                        <p>VCam画面内の<span class="highlight">「⚙️（設定）」ボタン</span>をクリックして設定画面を開きます。</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h4>📹 入力デバイスの選択</h4>
+                        <p><strong>顔トラッキング用カメラ</strong>と<strong>音声入力用マイク</strong>を設定します。</p>
+                        
+                        <div class="feature-grid">
+                            <div class="feature-card">
+                                <h5>📷 おすすめカメラ設定</h5>
+                                <p>「内蔵カメラ」を選択</p>
+                            </div>
+                            <div class="feature-card">
+                                <h5>🎤 おすすめマイク設定</h5>
+                                <p>「内蔵マイク」を選択</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h4>🍺 待機モーション設定</h4>
+                        <p><span class="highlight">アイドルモーション（待機中の動き）</span>のオン/オフを設定します。</p>
+                        
+                        <div class="term-box">
+                            <div class="term-title">📚 専門用語解説</div>
+                            <p><strong>アイドルモーション</strong>＝何もしていない時でもアバターが自然に揺れたり伸びをしたりする動き。生き生きした印象を与える</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>📱 メニューバーへの追加</h3>
+                <p>メニューバーにVCamを追加（オンに）しておくと、ZoomやOBSなどを立ち上げ直しても自動でつながりやすくなります。</p>
+                
+                <div class="tip-box">
+                    <strong>💡 メニューバー追加のメリット</strong><br>
+                    ・バックグラウンドで常駐<br>
+                    ・会議アプリからの自動認識が向上<br>
+                    ・ワンクリックでVCamの操作が可能
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>🤖 外部アプリ連携（上級者向け）</h3>
+                <p>VCamだけでも顔・手・指のトラッキングは可能ですが、<span class="highlight">iFacialMocap</span>などの外部アプリと連携すると、より細かい表情まで再現できます。</p>
+                
+                <div class="example-box">
+                    <div class="example-title">📱 iFacialMocapとは</div>
+                    <p>iPhone/iPadのTrueDepthカメラを使って、より精密な顔の表情をキャプチャできるアプリ。VCamと連携すると「Perfect Sync」という高精度な表情再現が可能になります。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- アバター読み込みセクション -->
+        <div class="section">
+            <h2 class="section-title">
+                <div class="icon">👤</div>
+                手順D：アバター（VRM）を読み込む
+            </h2>
+
+            <div class="subsection">
+                <h3>🎯 結論：2つの方法でアバターを入手</h3>
+                
+                <div class="diagram-container">
+                    <div class="mermaid">
+                        flowchart TD
+                            A[アバターを入手したい] --> B{どこから？}
+                            B -->|ローカル| C[📁 VRMファイルを開く]
+                            B -->|オンライン| D[🌐 VRoid Hubから選ぶ]
+                            C --> E[ファイル → VRMファイルを開く]
+                            D --> F[ファイル → VRoid Hubからアバターを選ぶ]
+                            E --> G[.vrmファイルを選択]
+                            F --> H[ブラウザで認証]
+                            G --> I[✅ アバター読み込み完了]
+                            H --> J[モデルを選択]
+                            J --> I
+                    </div>
+                </div>
+
+                <div class="app-grid">
+                    <div class="app-card">
+                        <h4>📁 ローカルファイル</h4>
+                        <p>既に持っている<strong>.vrmファイル</strong>を直接読み込む方法</p>
+                        <div class="tip-box">
+                            <strong>💡 対応形式</strong><br>
+                            VRM 0.x / VRM 1.0 の両方に対応
+                        </div>
+                    </div>
+                    <div class="app-card">
+                        <h4>🌐 VRoid Hub</h4>
+                        <p>オンラインの<strong>アバター共有サービス</strong>から選んで読み込む方法</p>
+                        <div class="tip-box">
+                            <strong>💡 メリット</strong><br>
+                            無料で多種多様なアバターが利用可能
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>📂 ローカルVRMファイルの読み込み手順</h3>
+                
+                <div class="step-container">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h4>📋 ファイルメニューを開く</h4>
+                        <p>VCam上部の<span class="highlight">「ファイル」メニュー</span>をクリックします。</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h4>📁 VRMファイルを選択</h4>
+                        <p>「<span class="highlight">VRMファイルを開く…</span>」を選択し、拡張子が「.vrm」のファイルを指定します。</p>
+                        
+                        <div class="example-box">
+                            <div class="example-title">📍 VRMファイルの一般的な保存場所</div>
+                            <ul>
+                                <li>ダウンロードフォルダ</li>
+                                <li>デスクトップ</li>
+                                <li>書類フォルダ内の専用フォルダ</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h4>✅ 読み込み完了</h4>
+                        <p>読み込みが完了すると、VCamのプレビュー画面にアバターが表示されます。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>🌐 VRoid Hubからの読み込み手順</h3>
+                
+                <div class="step-container">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h4>🌐 VRoid Hub連携を開始</h4>
+                        <p>ファイルメニューから「<span class="highlight">VRoid Hubからアバターを選ぶ</span>」をクリックします。</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h4>🔐 ブラウザで認証</h4>
+                        <p>ブラウザが開いてVRoid Hubの認証画面が表示されるので、ログインまたはアカウント作成を行います。</p>
+                        
+                        <div class="term-box">
+                            <div class="term-title">📚 専門用語解説</div>
+                            <p><strong>認証フロー</strong>＝VCamがあなたのVRoid Hubアカウントにアクセスする許可を得るための手続き</p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h4>👤 アバターを選択</h4>
+                        <p>利用可能なアバターの一覧が表示されるので、使いたいモデルを選択します。</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h4>⬇️ ダウンロード・読み込み</h4>
+                        <p>選択したアバターが自動的にダウンロードされ、VCamに読み込まれます。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">🏠 例え話：VRMは「着せ替え可能な着ぐるみ」</div>
+                <p>VRMファイルは、デジタルの「着ぐるみ」のようなものです。ローカルファイルは自分の部屋のクローゼットから直接着替える方法、VRoid Hubは巨大な「貸衣装店」から借りる方法と考えるとわかりやすいです。</p>
+            </div>
+        </div>
+
+        <!-- 操作機能セクション -->
+        <div class="section">
+            <h2 class="section-title">
+                <div class="icon">🎭</div>
+                手順E：表情・動き・背景・エフェクトの基本操作
+            </h2>
+
+            <div class="subsection">
+                <h3>🎯 結論：5つの基本機能でアバターを自在に操作</h3>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h5>😊 表情・アニメーション</h5>
+                        <p>ワンクリックで表情変更</p>
+                    </div>
+                    <div class="feature-card">
+                        <h5>👍 絵文字リアクション</h5>
+                        <p>スタンプで感情表現</p>
+                    </div>
+                    <div class="feature-card">
+                        <h5>📝 テロップ表示</h5>
+                        <p>YouTuber風の字幕</p>
+                    </div>
+                    <div class="feature-card">
+                        <h5>🎨 画面効果</h5>
+                        <p>フィルターで雰囲気調整</p>
+                    </div>
+                    <div class="feature-card">
+                        <h5>🕺 待機モーション</h5>
+                        <p>自然な揺れや動き</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>😊 表情・アニメーション機能</h3>
+                <p>VCamは<span class="highlight">「ワンクリックで表情切り替えやアニメ再生」</span>ができます。会議中のリアクションを手早く出せるのが特徴です。</p>
+                
+                <div class="example-box">
+                    <div class="example-title">💼 会議での活用例</div>
+                    <ul>
+                        <li><strong>同意を示す</strong>：うなずきアニメーション</li>
+                        <li><strong>驚きを表現</strong>：目を見開く表情</li>
+                        <li><strong>考え中</strong>：腕組みポーズ</li>
+                        <li><strong>挨拶</strong>：手を振るアニメーション</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>👍 絵文字リアクション機能</h3>
+                <p><span class="highlight">スタンプ感覚で画面に貼れる機能</span>があります。気持ちを視覚でサッと伝えられます。</p>
+                
+                <div class="tip-box">
+                    <strong>💡 効果的な使い方</strong><br>
+                    ・「👏」拍手：良いアイデアに賛同<br>
+                    ・「❓」クエスチョン：質問がある時<br>
+                    ・「💡」電球：アイデアを思いついた時<br>
+                    ・「❤️」ハート：感謝や感動を表現
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>📝 テロップ（字幕）風表示</h3>
+                <p><span class="highlight">YouTuber風にテキストを乗せる</span>ことができます。話題の見出し出しに便利です。</p>
+                
+                <div class="example-box">
+                    <div class="example-title">📺 使用例</div>
+                    <ul>
+                        <li>「今日のアジェンダ」</li>
+                        <li>「重要なお知らせ」</li>
+                        <li>「Q&Aタイム」</li>
+                        <li>「休憩時間です」</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>🎨 画面効果（フィルター）</h3>
+                <p>明るさや色味、<span class="highlight">ビネット</span>などのエフェクトで雰囲気を調整できます。</p>
+                
+                <div class="term-box">
+                    <div class="term-title">📚 専門用語解説</div>
+                    <p><strong>ビネット</strong>＝画面の周辺を暗くして中央に注目を集める写真の技法。映画のような雰囲気を演出</p>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>🕺 モーション（待機アニメ）</h3>
+                <p>何もしていなくても自然に揺れたり伸びをしたりするモーションをオン／オフできます。生き生きした見た目になります。</p>
+                
+                <div class="warning-box">
+                    <strong>⚠️ 注意点</strong><br>
+                    フォーマルな会議では待機モーションをオフにして、落ち着いた印象を保つことも大切です。
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>🖱️ プレビュー画面での調整</h3>
+                <p>プレビュー画面上でアバターの<span class="highlight">位置・角度・サイズ</span>は自由に調整できます。</p>
+                
+                <div class="tip-box">
+                    <strong>💡 操作方法</strong><br>
+                    ・トラックパッドの2本指操作<br>
+                    ・ドラッグで位置移動<br>
+                    ・ピンチイン/アウトでサイズ調整<br>
+                    ・回転ジェスチャーで角度調整
+                </div>
+            </div>
+        </div>
+
+        <!-- 会議アプリ連携セクション -->
+        <div class="section">
+            <h2 class="section-title">
+                <div class="icon">💻</div>
+                手順F：Zoom／Google Meet／OBSで"カメラにVCamを選ぶ"
+            </h2>
+
+            <div class="subsection">
+                <h3>🎯 結論：4ステップでどの会議アプリでも使用可能</h3>
+                
+                <div class="diagram-container">
+                    <div class="mermaid">
+                        flowchart TD
+                            A[🚀 VCamを先に起動] --> B[💻 会議アプリを開く]
+                            B --> C[📹 カメラ設定を開く]
+                            C --> D[📋 カメラ一覧から「VCam」を選択]
+                            D --> E{VCamが見つからない？}
+                            E -->|Yes| F[🔄 会議アプリを再起動]
+                            E -->|No| G[✅ アバター映像が表示]
+                            F --> D
+                    </div>
+                </div>
+
+                <div class="step-container">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h4>🚀 VCamを先に起動</h4>
+                        <p>会議アプリを開く前に、必ずVCamを起動しておきます。これが最も確実な方法です。</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h4>💻 会議アプリを開く</h4>
+                        <p>Zoom、Google Meet、OBS Studioなど、使用したいアプリケーションを開きます。</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h4>📹 カメラ設定にアクセス</h4>
+                        <p>各アプリのカメラ（映像入力）設定メニューを開きます。</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h4>📋 VCamを選択</h4>
+                        <p>カメラデバイス一覧から「VCam」を選択します。これでアバター映像が表示されます。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>📋 各アプリでの具体的設定方法</h3>
+                
+                <div class="app-grid">
+                    <div class="app-card">
+                        <h4>📞 Zoom</h4>
+                        <p><strong>設定方法：</strong></p>
+                        <ol>
+                            <li>設定 → ビデオ → カメラ</li>
+                            <li>「VCam」を選択</li>
+                        </ol>
+                        <p><strong>会議中の変更：</strong></p>
+                        <p>画面左下のカメラ切替ボタンからも変更可能</p>
+                    </div>
+                    
+                    <div class="app-card">
+                        <h4>🌐 Google Meet</h4>
+                        <p><strong>設定方法：</strong></p>
+                        <ol>
+                            <li>設定（⚙️歯車）をクリック</li>
+                            <li>ビデオ → カメラ</li>
+                            <li>「VCam」を選択</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="app-card">
+                        <h4>🎥 OBS Studio</h4>
+                        <p><strong>設定方法：</strong></p>
+                        <ol>
+                            <li>ソース → 追加 → 映像キャプチャデバイス</li>
+                            <li>デバイス：「VCam」を選択</li>
+                        </ol>
+                        <div class="tip-box">
+                            <strong>💡 OBSでの活用</strong><br>
+                            配信やレコーディングで高品質なアバター映像を使用可能
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">🏠 例え話：カメラ選択は「ケーブルの差し替え」</div>
+                <p>会議アプリの「カメラ選択」は、パソコンに差すカメラケーブルを物理的に差し替えるのと同じです。ここで「VCam」という「仮想のカメラケーブル」に差し替えるイメージです。</p>
+            </div>
+
+            <div class="subsection">
+                <h3>🔧 よくある問題と解決法</h3>
+                
+                <div class="trouble-section">
+                    <h4>❌ 問題：VCamがカメラ一覧に表示されない</h4>
+                    <p><strong>解決法：</strong></p>
+                    <ol>
+                        <li>会議アプリを完全に終了</li>
+                        <li>VCamが起動していることを確認</li>
+                        <li>会議アプリを再起動</li>
+                        <li>それでも出ない場合はMacを再起動</li>
+                    </ol>
+                </div>
+
+                <div class="trouble-section">
+                    <h4>❌ 問題：映像が表示されない</h4>
+                    <p><strong>解決法：</strong></p>
+                    <ol>
+                        <li>VCamでアバターが正常に表示されているか確認</li>
+                        <li>VCamのカメラ権限が有効になっているか確認</li>
+                        <li>macOS 15の場合、Camera Extensionが有効か確認</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- トラブルシューティングセクション -->
+        <div class="section">
+            <h2 class="section-title">
+                <div class="icon">🛠️</div>
+                トラブルシューティング：つまずきやすいポイント
+            </h2>
+
+            <div class="subsection">
+                <h3>🎯 結論：主要な4つの問題と解決法</h3>
+                
+                <div class="trouble-section">
+                    <h4>❌ 問題1：会議アプリに「VCam」が出ない</h4>
+                    <div class="step-container">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <h4>macOS 15以降の場合</h4>
+                            <p>システム設定 → 一般 → ログイン項目と拡張機能 → カメラ機能拡張でVCamのCameraExtensionをオンにする</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <h4>会議アプリを再起動</h4>
+                            <p>Zoom、Meet、OBSなどを完全に終了してから再起動</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <h4>最終手段：Mac再起動</h4>
+                            <p>上記で解決しない場合はMacを再起動</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="trouble-section">
+                    <h4>❌ 問題2：権限を拒否してしまった／映らない</h4>
+                    <p><strong>解決法：システム設定で権限を再有効化</strong></p>
+                    <ol>
+                        <li>システム設定を開く</li>
+                        <li>プライバシーとセキュリティ → カメラ</li>
+                        <li>VCamをオンにする</li>
+                        <li>プライバシーとセキュリティ → マイク</li>
+                        <li>VCamをオンにする</li>
+                    </ol>
+                </div>
+
+                <div class="trouble-section">
+                    <h4>❌ 問題3：VRMが読み込めない</h4>
+                    <p><strong>解決法：ファイル形式と互換性の確認</strong></p>
+                    <div class="tip-box">
+                        <strong>💡 確認ポイント</strong><br>
+                        ・VRM 0.x または VRM 1.0 対応のモデルか<br>
+                        ・ファイルが破損していないか<br>
+                        ・VRoid Hub経由での読み込みも試す
+                    </div>
+                </div>
+
+                <div class="trouble-section">
+                    <h4>❌ 問題4：動きがカクつく</h4>
+                    <p><strong>解決法：環境とパフォーマンスの最適化</strong></p>
+                    <ul>
+                        <li><strong>明るさを上げる</strong>：トラッキング精度が向上</li>
+                        <li><strong>背景をシンプルにする</strong>：処理負荷を軽減</li>
+                        <li><strong>他アプリを閉じる</strong>：メモリとCPUの確保</li>
+                        <li><strong>Apple Silicon推奨</strong>：M1/M2/M3チップで最適化</li>
+                        <li><strong>macOS 14以上</strong>：推奨OS環境</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>🔍 パフォーマンス向上のコツ</h3>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h5>💡 照明環境</h5>
+                        <p>明るい環境で正面からの照明を確保</p>
+                    </div>
+                    <div class="feature-card">
+                        <h5>🖥️ ハードウェア</h5>
+                        <p>Apple Siliconチップ搭載Macが最適</p>
+                    </div>
+                    <div class="feature-card">
+                        <h5>🧹 メモリ管理</h5>
+                        <p>不要なアプリを終了してメモリを確保</p>
+                    </div>
+                    <div class="feature-card">
+                        <h5>📹 カメラ設定</h5>
+                        <p>解像度を適切に調整（必要以上に高くしない）</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">🏠 例え話：トラッキング精度は「視力検査」のようなもの</div>
+                <p>顔や手のトラッキング精度は、眼科の視力検査と同じです。明るい環境で正面からはっきり見えれば見えるほど、正確に動きを追跡できます。暗い部屋や横顔では「見えにくく」なってしまいます。</p>
+            </div>
+        </div>
+
+        <!-- クイックスタートセクション -->
+        <div class="quick-start">
+            <h2>⚡ 5分クイックスタート：最短ルートまとめ</h2>
+            
+            <div class="subsection">
+                <h3>🎯 結論：6つのステップで即座に開始</h3>
+                
+                <div class="diagram-container">
+                    <div class="mermaid">
+                        flowchart TD
+                            A[📦 VCamをApplicationsに入れて起動] --> B[✅ 権限をすべて許可]
+                            B --> C[⚙️ macOS 15ならCamera Extension有効化]
+                            C --> D[📹 VCam設定: カメラ=内蔵, マイク=内蔵]
+                            D --> E[👤 ファイル → モデル読み込み]
+                            E --> F[💻 Zoom等でカメラ=VCamを選択]
+                            F --> G[🎉 アバターで会議参加！]
+                    </div>
+                </div>
+
+                <div class="step-container">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h4>📦 インストール＆起動</h4>
+                        <p>VCamをアプリケーションフォルダに入れて起動 → 権限はすべて許可</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h4>⚙️ Camera Extension有効化</h4>
+                        <p>macOS 15以降なら、システム設定でCamera Extensionをオン</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h4>📹 基本設定</h4>
+                        <p>VCamの⚙️設定でカメラ=内蔵カメラ、マイク=内蔵マイクに設定</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h4>👤 アバター読み込み</h4>
+                        <p>ファイル → モデルを読み込む（VRMファイル or VRoid Hub）</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <h4>💻 会議アプリ設定</h4>
+                        <p>Zoom等でカメラ=VCamを選ぶ。出なければアプリを再起動</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">6</div>
+                        <h4>🎉 完了</h4>
+                        <p>アバターで会議参加！表情・リアクション・効果ボタンも活用</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 押すボタンの順序</strong><br>
+                VCam起動 → 許可ボタン → システム設定のトグル → VCamの⚙️ → ファイルメニュー → 会議アプリのカメラ選択
+            </div>
+        </div>
+
+        <!-- 追加のコツセクション -->
+        <div class="section">
+            <h2 class="section-title">
+                <div class="icon">🚀</div>
+                追加のコツ：慣れてきたら試したい上級テクニック
+            </h2>
+
+            <div class="subsection">
+                <h3>🎯 結論：3つの上級テクニックで効率アップ</h3>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h5>📍 メニューバー常駐</h5>
+                        <p>毎回の準備を1クリックに短縮</p>
+                    </div>
+                    <div class="feature-card">
+                        <h5>📝 プリセット作成</h5>
+                        <p>よく使うリアクションやテロップを事前準備</p>
+                    </div>
+                    <div class="feature-card">
+                        <h5>📱 外部アプリ連携</h5>
+                        <p>iFacialMocapでより精密な表情制御</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>📍 メニューバー常駐の活用</h3>
+                <p>メニューバー常駐をオンにすると、VCamがバックグラウンドで動作し続けます。</p>
+                
+                <div class="tip-box">
+                    <strong>💡 メリット</strong><br>
+                    ・会議アプリを開いた時に自動認識<br>
+                    ・システム起動時に自動でVCam起動<br>
+                    ・メニューバーから素早く操作可能
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>📝 リアクション・テロップのプリセット活用</h3>
+                <p>絵文字リアクションやテロップのプリセットを作っておくと、会議や配信で「間」を逃さず適切なリアクションを出せます。</p>
+                
+                <div class="example-box">
+                    <div class="example-title">💼 会議用プリセット例</div>
+                    <ul>
+                        <li><strong>開始時</strong>：「おはようございます」テロップ + 👋絵文字</li>
+                        <li><strong>同意時</strong>：「賛成です」テロップ + 👍絵文字</li>
+                        <li><strong>質問時</strong>：「質問があります」テロップ + ❓絵文字</li>
+                        <li><strong>終了時</strong>：「お疲れ様でした」テロップ + 🙏絵文字</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>📱 iFacialMocap連携（Perfect Sync）</h3>
+                <p><span class="highlight">iFacialMocap</span>等を併用すると、口形やまばたきなどの「細かい表情」まで再現可能になります。</p>
+                
+                <div class="term-box">
+                    <div class="term-title">📚 専門用語解説</div>
+                    <p><strong>Perfect Sync</strong>＝VCamの高精度表情同期機能。外部アプリと連携してより自然な表情を実現</p>
+                </div>
+
+                <div class="step-container">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h4>📱 iFacialMocapをインストール</h4>
+                        <p>iPhone/iPadにiFacialMocapアプリをインストール</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h4>🔗 VCamと連携設定</h4>
+                        <p>VCamの設定でiFacialMocap連携を有効化</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h4>📡 同じWi-Fi接続</h4>
+                        <p>MacとiPhone/iPadを同じWi-Fiネットワークに接続</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h4>✅ Perfect Sync開始</h4>
+                        <p>より自然で精密な表情トラッキングが可能に</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ 上級機能使用時の注意</strong><br>
+                外部アプリ連携は処理負荷が増加します。Macのスペックと相談しながら利用してください。
+            </div>
+        </div>
+
+        <!-- フッター -->
+        <div class="section" style="text-align: center; background: linear-gradient(135deg, var(--main-color), var(--accent-3)); color: white;">
+            <h2>🎉 VCamマスターへの道のり完了！</h2>
+            <p>これであなたもアバターを使った会議の達人です。<br>素敵なバーチャルライフをお楽しみください！</p>
+            <div style="margin-top: 20px; opacity: 0.8;">
+                <p>📚 このガイドで困ったことがあれば、各セクションを読み返してトラブルシューティングを活用してください。</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
