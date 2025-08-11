@@ -1,1 +1,552 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アバター制作ワークショップ・3teneで作ったアバターをZoomに映してみよう！</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'base',
+                securityLevel: 'loose', // emoji対応
+                fontFamily: '"Kaisei Decol", sans-serif',
+                themeVariables: {
+                    primaryColor: '#4CAF50',
+                    primaryTextColor: '#fff',
+                    primaryBorderColor: '#E91E63',
+                    lineColor: '#009688',
+                    secondaryColor: '#FFC107',
+                    tertiaryColor: '#9575CD'
+                },
+                flowchart: {
+                    cornerRadius: 15,
+                    curve: 'cardinal',
+                    htmlLabels: true
+                }
+            });
+        });
+    </script>
+    
+    <style>
+        :root {
+            --メインカラー: #4CAF50;
+            --アクセント-1: #9575CD;
+            --アクセント-2: #FFC107;
+            --アクセント-3: #009688;
+            --アクセント-4: #E91E63;
+            --背景色: #FAFAFA;
+            --文字色: #333;
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', Meiryo, sans-serif;
+            line-height: 1.8;
+            background-color: var(--背景色);
+            color: var(--文字色);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--メインカラー), var(--アクセント-3));
+            color: white;
+            text-align: center;
+            padding: 50px 20px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.4);
+        }
+        
+        .header h1 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        .header .subtitle {
+            font-size: 1.5em;
+            opacity: 0.95;
+            margin-bottom: 20px;
+        }
+
+        .header .date {
+            font-size: 1.2em;
+            opacity: 0.9;
+            background: rgba(255,255,255,0.2);
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+        }
+        
+        .section {
+            background: white;
+            margin: 30px 0;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border-left: 7px solid var(--メインカラー);
+        }
+        
+        .section h2 {
+            color: var(--メインカラー);
+            font-size: 2em;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 3px solid var(--アクセント-2);
+            padding-bottom: 10px;
+        }
+        
+        .section h3 {
+            color: var(--アクセント-3);
+            font-size: 1.6em;
+            margin: 30px 0 15px 0;
+            padding-left: 15px;
+            border-left: 5px solid var(--アクセント-2);
+        }
+        
+        .section h4 {
+            color: var(--アクセント-1);
+            font-size: 1.3em;
+            margin: 20px 0 10px 0;
+        }
+        
+        .icon {
+            font-size: 1.5em;
+            line-height: 1;
+        }
+        
+        .info-box {
+            background: linear-gradient(135deg, #E8F5E9, #F1F8E9);
+            border: 2px solid var(--メインカラー);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .alert-box {
+            background: linear-gradient(135deg, #FFF3E0, #FFF8E1);
+            border: 2px solid var(--アクセント-2);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .critical-alert-box {
+            background: linear-gradient(135deg, #FFEBEE, #FCE4EC);
+            border: 2px solid var(--アクセント-4);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            padding: 0;
+        }
+        
+        .step-list li {
+            counter-increment: step-counter;
+            margin: 20px 0;
+            padding: 20px 25px 20px 70px;
+            background: linear-gradient(135deg, #FAFAFA, #FFFFFF);
+            border-radius: 12px;
+            border-left: 5px solid var(--メインカラー);
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--メインカラー);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .detailed-steps {
+            background: #F5F5F5;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid var(--アクセント-3);
+        }
+
+        .detailed-steps ol, .detailed-steps ul {
+            padding-left: 25px;
+        }
+        
+        .term {
+            background: #E3F2FD;
+            color: #1565C0;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        
+        .explanation {
+            color: #555;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+
+        .button-guide {
+            background: #E0E0E0;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border-bottom: 3px solid #9E9E9E;
+            margin: 10px 0;
+            font-family: monospace;
+            font-size: 1em;
+            color: #424242;
+            display: inline-block;
+        }
+        
+        .workflow-container {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .workflow-container h3 {
+            color: var(--メインカラー);
+            margin-bottom: 20px;
+        }
+
+        .example-box {
+            background: #FFF9C4;
+            border: 2px dashed var(--アクセント-2);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .example-box p::before {
+            content: "🎨 例え話：";
+            font-weight: bold;
+            color: var(--アクセント-3);
+        }
+
+        .footer {
+            background: linear-gradient(135deg, var(--アクセント-1), var(--アクセント-4));
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 20px;
+            margin-top: 50px;
+        }
+        
+        .footer h3 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .header h1 { font-size: 2.2em; }
+            .header .subtitle { font-size: 1.2em; }
+            .section { padding: 20px; }
+            .section h2 { font-size: 1.6em; }
+            .section h3 { font-size: 1.4em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>アバター制作ワークショップ</h1>
+            <p class="subtitle">3teneで作ったアバターをZoomに映してみよう！</p>
+            <p class="date">開催日：2025年8月9日</p>
+        </header>
+
+        <section class="section">
+            <h2><span class="icon">🎯</span>本日のゴール</h2>
+            <div class="info-box">
+                <p>このワークショップでは、Macを使って<strong>オリジナルの3Dアバターを作成</strong>し、そのアバターで<strong>Zoom会議に参加する</strong>までの一連の流れを、超初心者の方でも安心して実践できるように、一つ一つの手順を丁寧に解説します。</p>
+            </div>
+            <div class="workflow-container">
+                <h3>本日の流れ</h3>
+                <div class="mermaid">
+                    graph TD
+                        A[STEP 1: 事前準備 🛠️] --> B[STEP 2: アバター作成 🧑‍🎨]
+                        B --> C[STEP 3: アバターを動かす 🏃‍♀️]
+                        C --> D[STEP 4: Zoomに映す 💻]
+                        D --> E[ゴール: バーチャル会議デビュー 🎉]
+                        
+                        style A fill:#9575CD,stroke:#fff,color:#fff
+                        style B fill:#FFC107,stroke:#333,color:#333
+                        style C fill:#009688,stroke:#fff,color:#fff
+                        style D fill:#E91E63,stroke:#fff,color:#fff
+                        style E fill:#4CAF50,stroke:#fff,color:#fff
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2><span class="icon">🛠️</span>STEP 1: 事前準備 - 必要なソフトを揃えよう</h2>
+            <h3>結論：3つの無料ソフトをMacにダウンロードします</h3>
+            <div class="info-box">
+                <p>バーチャル配信を始めるために、以下の3つのソフトウェアを公式サイトからダウンロードし、インストールしておきましょう。</p>
+                <ul>
+                    <li><strong class="term">VRoid Studio</strong>: オリジナルアバターを作る粘土細工のようなアプリ</li>
+                    <li><strong class="term">3tene</strong>: 作ったアバターに命を吹き込み、動かすためのアプリ</li>
+                    <li><strong class="term">VCam</strong>: 3teneの映像をZoomに送るための「魔法のカメラ」アプリ</li>
+                </ul>
+            </div>
+            
+            <div class="alert-box">
+                <h4>🍎 Mac環境の特殊事情</h4>
+                <p>Mac、特に新しいM1/M2/M3チップ搭載モデルでは、Windowsと比べてセキュリティ設定が厳しくなっています。そのため、アプリの初回起動時にいくつかの特別な手順が必要になる場合があります。このガイドで詳しく説明するのでご安心ください。</p>
+            </div>
+
+            <h4>具体的なダウンロード手順</h4>
+            <ol class="step-list">
+                <li>
+                    <strong>VRoid Studioをダウンロード</strong>
+                    <div class="detailed-steps">
+                        「VRoid Studio」で検索し、公式サイト(vroid.com)からMac版をダウンロード。dmgファイルを開き、アプリを「Applications」フォルダにドラッグします。
+                    </div>
+                </li>
+                <li>
+                    <strong>3teneをダウンロード</strong>
+                    <div class="detailed-steps">
+                        「3tene」で検索し、公式サイト(3tene.com)からMac版をダウンロード。同様にインストールします。
+                    </div>
+                </li>
+                <li>
+                    <strong>VCamをダウンロード</strong>
+                    <div class="detailed-steps">
+                        「VCam Mac」で検索し、公式サイト(GitHubページなど)からダウンロード。これも同様にインストールします。
+                    </div>
+                </li>
+            </ol>
+            <div class="example-box">
+                <p>この準備は、料理教室で「包丁」「まな板」「フライパン」を用意するようなものです。道具が揃えば、あとはレシピ通りに進めるだけです！</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2><span class="icon">🧑‍🎨</span>STEP 2: アバター作成 - VRoid Studioで自分だけのキャラクターを作ろう</h2>
+            <h3>結論：顔・髪・服を順番に選んで、VRMファイルで保存します</h3>
+            
+            <h4>アバター作成の4ステップ</h4>
+            <div class="workflow-container">
+                <div class="mermaid">
+                    flowchart TD
+                        A[🚀 VRoid起動] --> B[👤 顔・髪型を編集]
+                        B --> C[👕 衣装をコーディネート]
+                        C --> D[💾 VRM形式でエクスポート]
+                        D --> E[✅ オリジナルアバター完成!]
+                </div>
+            </div>
+
+            <ol class="step-list">
+                <li>
+                    <strong>顔・髪型をカスタマイズ</strong>
+                    <div class="detailed-steps">
+                        VRoid Studioを起動し、「新規作成」からキャラクターのベースを選択します。画面左のメニューから「顔」「髪型」を選び、右側のスライダーやプリセットを使って、目、鼻、口の形や髪型、髪色を自由に調整します。
+                    </div>
+                </li>
+                <li>
+                    <strong>衣装をコーディネート</strong>
+                    <div class="detailed-steps">
+                        左メニューの「衣装」タブで、トップス、ボトムス、靴などを選びます。各パーツの色や模様も「テクスチャ編集」で変更可能です。
+                    </div>
+                </li>
+                <li>
+                    <strong>VRM形式でエクスポート（保存）</strong>
+                    <div class="detailed-steps">
+                        アバターが完成したら、画面右上の<span class="button-guide">エクスポート</span>ボタンをクリックします。「VRMエクスポート」を選択し、ファイル名を入力してデスクトップなど分かりやすい場所に保存します。この <span class="term">.vrm</span> ファイルがあなたのアバターのデータになります。
+                    </div>
+                </li>
+            </ol>
+
+            <div class="alert-box">
+                <h4>🖱️ Macでの操作のコツ</h4>
+                <ul>
+                    <li><strong>ズーム</strong>: トラックパッドを2本指で上下にスワイプ</li>
+                    <li><strong>回転</strong>: トラックパッドを2本指で押しながらドラッグ</li>
+                    <li><strong>移動</strong>: Shiftキーを押しながら2本指でドラッグ</li>
+                </ul>
+            </div>
+            
+            <div class="example-box">
+                <p>アバター作りは「デジタル粘土細工」や「着せ替え人形」のようなものです。正解はないので、楽しみながら理想のキャラクターを創造してみてください。</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2><span class="icon">🏃‍♀️</span>STEP 3: アバターを動かす - 3teneに命を吹き込もう</h2>
+            <h3>結論：作成したVRMファイルを3teneに読み込み、カメラで顔の動きを連動させます</h3>
+
+            <div class="critical-alert-box">
+                <h4>⚠️ Macでの3tene起動時の最重要ポイント</h4>
+                <p>Macのセキュリティ機能により、ダウンロードした3teneはそのままでは起動できないことがあります。以下の手順で起動してください。</p>
+                <div class="detailed-steps">
+                    Finderで「3teneFREE」アプリを探し、<strong style="color:red;">Controlキーを押しながらクリック</strong>し、表示されたメニューから<strong style="color:red;">「開く」</strong>を選択します。警告が出ても「開く」をクリックしてください。
+                </div>
+            </div>
+
+            <h4>アバターを動かす3ステップ</h4>
+            <ol class="step-list">
+                <li>
+                    <strong>作成したアバター(VRM)を読み込む</strong>
+                    <div class="detailed-steps">
+                        3teneを起動し、<span class="button-guide">PC上のファイルをロード</span>ボタンをクリック。先ほどVRoid Studioで作成した <span class="term">.vrm</span> ファイルを選択します。
+                    </div>
+                </li>
+                <li>
+                    <strong>フェイストラッキングをONにする</strong>
+                    <div class="detailed-steps">
+                        右側のメニューから<span class="button-guide">フェイストラッキング</span>をONにします。カメラへのアクセス許可を求められたら「許可」してください。MacのWebカメラが起動し、あなたの顔の動きがアバターに反映されます。
+                    </div>
+                </li>
+                <li>
+                    <strong>動きを確認する</strong>
+                    <div class="detailed-steps">
+                        顔を上下左右に動かしたり、まばたきや口の開閉をしてみてください。アバターが同じように動けば成功です！
+                    </div>
+                </li>
+            </ol>
+
+             <div class="alert-box">
+                <h4>🤔 3teneが起動しない・動かない場合</h4>
+                <p>M2 Macなど特定の環境では起動に失敗することがあります。その際は以下の「緊急起動モード」を試してください。</p>
+                 <ul>
+                     <li><strong>Altキー起動</strong>: <span class="term">Alt(Option)キー</span>を押しながら3teneのアイコンをダブルクリックする。</li>
+                     <li><strong>完全再インストール</strong>: アプリを完全に削除し、Macを再起動してから再ダウンロードする。</li>
+                 </ul>
+             </div>
+
+            <div class="example-box">
+                <p>3teneの役割は「人形遣い」です。Webカメラという見えない糸で、あなた（人形遣い）の表情や動きをアバター（人形）に伝えています。</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2><span class="icon">💻</span>STEP 4: Zoomに映す - VCamを使ってバーチャル会議に参加しよう</h2>
+            <h3>結論：VCamを「仮想カメラ」として起動し、Zoomのカメラ設定でVCamを選択します</h3>
+
+            <div class="info-box">
+                <h4>🤔 なぜVCamが必要なの？</h4>
+                <p>Zoomは直接3teneの画面を映すことができません。そこで<span class="term">VCam</span>という仲介アプリを使います。VCamは3teneの映像を受け取り、それを「本物のWebカメラからの映像」のように見せかけてZoomに送ってくれます。この仕組みを<span class="term">仮想カメラ</span>と呼びます。</p>
+            </div>
+
+            <div class="workflow-container">
+                <h3>Zoom連携の仕組み</h3>
+                <div class="mermaid">
+                    graph LR
+                        subgraph Macの中
+                            A(あなた 🧍) -->|顔認識| B(3tene 🏃‍♀️);
+                            B -->|映像を送る| C(VCam 📹);
+                        end
+                        C -->|仮想カメラとして認識される| D(Zoom 💻);
+                </div>
+            </div>
+            
+            <h4>Zoomにアバターを映す4ステップ</h4>
+            <ol class="step-list">
+                <li>
+                    <strong>VCamを起動し、アバターを読み込む</strong>
+                     <div class="detailed-steps">
+                        まずVCamを起動します。メニューの「ファイル」から「VRMファイルを開く」を選び、先ほどと同じ <span class="term">.vrm</span> ファイルを読み込みます。VCamの画面にアバターが表示され、顔の動きに連動することを確認します。
+                    </div>
+                </li>
+                <li>
+                    <strong>【重要】Camera Extensionを有効化 (macOS 15以降)</strong>
+                    <div class="critical-alert-box">
+                        <p>新しいmacOSでは、手動でVCamをカメラとして許可する必要があります。</p>
+                        <ol>
+                            <li><span class="button-guide">システム設定</span> → <span class="button-guide">一般</span> → <span class="button-guide">ログイン項目と拡張機能</span> を開く。</li>
+                            <li>「許可された機能拡張」セクションにある <span class="button-guide">カメラ機能拡張</span> をクリック。</li>
+                            <li><span class="button-guide">VCam.app</span> を見つけ、トグルを<strong>ON</strong>にする。</li>
+                        </ol>
+                        <p>これをしないと、Zoomのカメラ一覧にVCamが表示されません。</p>
+                    </div>
+                </li>
+                <li>
+                    <strong>Zoomを起動し、設定を開く</strong>
+                    <div class="detailed-steps">
+                        <strong>VCamと3teneを起動したまま</strong>、Zoomアプリを起動します。Zoomの<span class="button-guide">設定（歯車アイコン）</span>を開き、<span class="button-guide">ビデオ</span>タブに移動します。
+                    </div>
+                </li>
+                <li>
+                    <strong>カメラを「VCam」に切り替える</strong>
+                    <div class="detailed-steps">
+                        「カメラ」という項目にあるドロップダウンメニューをクリックすると、カメラの一覧が表示されます。その中から<strong style="color:red;">「VCam」</strong>を選択します。プレビュー画面にあなたのアバターが表示されたら成功です！そのまま会議に参加すれば、アバターの姿で会話できます。
+                    </div>
+                </li>
+            </ol>
+
+            <div class="alert-box">
+                <h4>🤔 Zoomのカメラ一覧に「VCam」が出ない！</h4>
+                <p>最も多いトラブルです。以下の順番で確認してください。</p>
+                <ol>
+                    <li>VCamアプリが<strong>先に</strong>起動しているか確認。</li>
+                    <li>macOS 15以降の場合、<strong>Camera Extension</strong>が有効になっているか再確認。</li>
+                    <li>Zoomアプリを<strong>完全に終了</strong>（Command+Q）してから、もう一度起動してみる。</li>
+                    <li>最終手段として、Mac自体を再起動する。</li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2><span class="icon">🎉</span>まとめ - これであなたもバーチャル会議マスター！</h2>
+            <div class="info-box">
+                <h3>本日達成したこと</h3>
+                <ul>
+                    <li>✅ Mac環境でVRoid Studioを使い、<strong>自分だけの3Dアバター</strong>を作成しました。</li>
+                    <li>✅ 3teneを使い、Webカメラでアバターに<strong>リアルタイムで動き</strong>をつけました。</li>
+                    <li>✅ VCamの<strong>仮想カメラ技術</strong>を理解し、Zoomでアバターを映す設定を完了しました。</li>
+                    <li>✅ Mac特有の<strong>セキュリティ設定や権限の問題</strong>を解決するスキルを身につけました。</li>
+                </ul>
+            </div>
+            
+            <h3>🚀 次のステップ</h3>
+            <p>基本をマスターしたあなたは、さらに表現の幅を広げることができます。</p>
+            <ul>
+                <li><strong>VRoid Studioでの高度な編集</strong>: テクスチャを描いてオリジナルの服を作ってみましょう。</li>
+                <li><strong>VCamの多機能活用</strong>: 絵文字リアクションやテロップ機能を使ってみましょう。</li>
+                <li><strong>OBS Studioとの連携</strong>: より高度な配信や録画に挑戦してみましょう。</li>
+            </ul>
+        </section>
+
+        <footer class="footer">
+            <h3>ワークショップお疲れ様でした！</h3>
+            <p>Macの制約を乗り越え、バーチャルな自分を手に入れましたね。<br>
+            この新しい表現力で、オンラインコミュニケーションをもっと楽しんでください！</p>
+            <p style="margin-top:20px; font-size:1.2em;"><strong>未来のバーチャル世界で、またお会いしましょう！</strong> 🚀✨</p>
+        </footer>
+    </div>
+</body>
+</html>
